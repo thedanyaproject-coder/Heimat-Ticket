@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heimatlieder Abend Tickets</title>
 
+<style>
+body{
+  margin:0;
+  background:#fffdf8;
+  font-family:Arial,sans-serif;
+  color:#160520;
+}
+
+.container{
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  letter-spacing:2px;
+}
+
+.box{
+  border:2px solid #bdad82;
+  padding:15px;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  font-size:16px;
+}
+
+button{
+  background:#160520;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+
+.ticket{
+  display:none;
+  border:3px solid #bdad82;
+  padding:20px;
+  margin-top:20px;
+  background:#fff;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>HEIMATLIEDER ABEND</h1>
+
+<div class="box">
+  Noch verfügbare Tische: <strong id="tables">-</strong><br>
+  Noch verfügbare Sitzplätze: <strong id="seats">-</strong>
+</div>
+
+<div class="box">
+  <input id="name" placeholder="Name">
+  <input id="persons" type="number" value="1">
+  <select id="food">
+    <option>Ja</option>
+    <option selected>Nein</option>
+  </select>
+  <button onclick="reserve()">Jetzt reservieren</button>
+</div>
+
+<div class="ticket" id="ticket">
+  <h2>TICKET</h2>
+  Name: <span id="t_name"></span><br>
+  Personen: <span id="t_persons"></span><br>
+  Essen: <span id="t_food"></span><br><br>
+  <strong id="t_number"></strong>
+</div>
+
+</div>
+
+<script>
+var API = "https://script.google.com/macros/s/AKfycbzURyof90tecaKRlR-iqmLwnDpq69xzT5L9Te7OKGsp35EcY1VtXWidLz092f6QLkd64g/exec";
+
+function jsonp(params, callback){
+  var cb = "cb_" + Math.random().toString(36).substring(2);
+  window[cb] = function(data){
+    callback(data);
+    delete window[cb];
+  };
+  var s = document.createElement("script");
+  s.src = API + "?" + params + "&callback=" + cb;
+  document.body.appendChild(s);
+}
+
+function load(){
+  jsonp("action=status", function(d){
+    document.getElementById("tables").innerHTML = d.available_tables;
+    document.getElementById("seats").innerHTML = d.available_seats;
+  });
+}
+
+function reserve(){
+  var name = document.getElementById("name").value;
+  var persons = document.getElementById("persons").value;
+  var food = document.getElementById("food").value;
+
+  jsonp("action=reserve&name="+encodeURIComponent(name)+"&persons="+persons+"&food="+food, function(d){
+    if(d.success){
+      document.getElementById("ticket").style.display="block";
+      document.getElementById("t_name").innerHTML=name;
+      document.getElementById("t_persons").innerHTML=persons;
+      document.getElementById("t_food").innerHTML=food;
+      document.getElementById("t_number").innerHTML=d.ticket_number;
+      load();
+    } else {
+      alert(d.message);
+    }
+  });
+}
+
+load();
+</script>
+
+</body>
+</html>
