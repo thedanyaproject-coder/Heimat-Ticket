@@ -14,7 +14,7 @@
       font-family: Arial, sans-serif;
     }
     .wrap {
-      max-width: 980px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 24px;
     }
@@ -32,7 +32,7 @@
       line-height: 1.2;
     }
     .intro {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto 24px;
       text-align: center;
       font-size: 16px;
@@ -42,10 +42,12 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto 24px;
     }
-    .status-box, .form-box, .ticket {
+    .status-box,
+    .form-box,
+    .ticket {
       background: #fff;
       border: 2px solid #bdad82;
     }
@@ -66,7 +68,7 @@
       font-weight: 700;
     }
     .message {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto 18px;
       padding: 14px 16px;
       display: none;
@@ -77,13 +79,21 @@
       background: #fff;
     }
     .form-box {
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto 30px;
       padding: 24px;
     }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+    }
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
     label {
       display: block;
-      margin: 14px 0 6px;
+      margin: 0 0 6px;
       font-weight: 700;
       font-size: 15px;
     }
@@ -131,7 +141,7 @@
     }
     .ticket {
       display: none;
-      max-width: 820px;
+      max-width: 860px;
       margin: 0 auto 30px;
       padding: 36px 34px 30px;
       position: relative;
@@ -191,6 +201,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 14px 28px;
       margin-bottom: 24px;
+      align-items: start;
     }
     .field.full {
       grid-column: 1 / -1;
@@ -229,8 +240,19 @@
       letter-spacing: 2px;
       word-break: break-word;
     }
+    .qr-wrap {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .qr-wrap img {
+      width: 140px;
+      height: 140px;
+      border: 1px solid #bdad82;
+      background: #fff;
+      padding: 6px;
+    }
     .free-line {
-      margin-top: 12px;
+      margin-top: 14px;
       text-align: center;
       font-size: 15px;
       letter-spacing: 2px;
@@ -243,13 +265,14 @@
       line-height: 1.7;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 720px) {
       .wrap { padding: 14px; }
       h1 { font-size: 28px; }
       .intro { font-size: 15px; margin-bottom: 20px; }
       .status-grid { grid-template-columns: 1fr; gap: 12px; }
       .status-value { font-size: 30px; }
       .form-box { padding: 16px; }
+      .form-grid { grid-template-columns: 1fr; }
       .btn-row { flex-direction: column; gap: 10px; }
       button { width: 100%; }
       .preview-title { font-size: 18px; }
@@ -291,14 +314,13 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="topline">GASTHAUS ALT GRIETH</div>
+    <div class="ticket-topline">GASTHAUS ALT GRIETH</div>
 
     <h1>HEIMATLIEDER ABEND – TICKETS</h1>
 
     <div class="intro">
       Der Eintritt zum Heimatlieder Abend im Gasthaus Alt Grieth ist frei und eine Reservierung ist nicht erforderlich.<br><br>
-      Wer sich jedoch einen Sitzplatz an einem Tisch sichern möchte, kann hier kostenlos ein Ticket bestellen.<br>
-      Nach der Bestellung wird sofort angezeigt, wie viele Tische und Sitzplätze noch verfügbar sind.
+      Wer sich jedoch einen Sitzplatz an einem Tisch sichern möchte, kann hier kostenlos ein Ticket bestellen.
     </div>
 
     <div class="status-grid">
@@ -315,17 +337,40 @@
     <div class="message" id="messageBox"></div>
 
     <div class="form-box">
-      <label for="name">Name</label>
-      <input id="name" type="text" placeholder="Ihr Name">
+      <div class="form-grid">
+        <div>
+          <label for="first_name">Vorname</label>
+          <input id="first_name" type="text" placeholder="Vorname">
+        </div>
 
-      <label for="persons">Anzahl Personen</label>
-      <input id="persons" type="number" min="1" value="1">
+        <div>
+          <label for="last_name">Achternaam</label>
+          <input id="last_name" type="text" placeholder="Achternaam">
+        </div>
 
-      <label for="food">Essen</label>
-      <select id="food">
-        <option value="Ja">Ja</option>
-        <option value="Nein" selected>Nein</option>
-      </select>
+        <div>
+          <label for="email">E-Mail</label>
+          <input id="email" type="email" placeholder="E-Mail">
+        </div>
+
+        <div>
+          <label for="phone">Telefonnummer</label>
+          <input id="phone" type="text" placeholder="Telefonnummer">
+        </div>
+
+        <div>
+          <label for="persons">Anzahl Personen</label>
+          <input id="persons" type="number" min="1" value="1">
+        </div>
+
+        <div>
+          <label for="food">Geht u ook eten?</label>
+          <select id="food">
+            <option value="Ja">Ja</option>
+            <option value="Nein" selected>Nein</option>
+          </select>
+        </div>
+      </div>
 
       <div class="btn-row">
         <button class="btn-primary" id="reserveBtn" onclick="reserve()">Jetzt kostenlos reservieren</button>
@@ -345,30 +390,53 @@
 
           <div class="ticket-grid">
             <div class="field">
-              <span class="field-label">Name</span>
-              <span class="field-value" id="t_name">—</span>
+              <span class="field-label">Vorname</span>
+              <span class="field-value" id="t_first_name">—</span>
             </div>
+
+            <div class="field">
+              <span class="field-label">Achternaam</span>
+              <span class="field-value" id="t_last_name">—</span>
+            </div>
+
+            <div class="field">
+              <span class="field-label">E-Mail</span>
+              <span class="field-value" id="t_email">—</span>
+            </div>
+
+            <div class="field">
+              <span class="field-label">Telefon</span>
+              <span class="field-value" id="t_phone">—</span>
+            </div>
+
             <div class="field">
               <span class="field-label">Anzahl Personen</span>
               <span class="field-value" id="t_persons">—</span>
             </div>
+
+            <div class="field">
+              <span class="field-label">Eten</span>
+              <span class="field-value" id="t_food">—</span>
+            </div>
+
             <div class="field">
               <span class="field-label">Datum</span>
               <span class="field-value">6. Juni</span>
             </div>
+
             <div class="field">
               <span class="field-label">Uhrzeit</span>
               <span class="field-value">20:00 Uhr</span>
-            </div>
-            <div class="field full">
-              <span class="field-label">Essen</span>
-              <span class="field-value" id="t_food">—</span>
             </div>
           </div>
 
           <div class="ticket-number-box">
             <div class="ticket-number-label">Ticketnummer</div>
             <div class="ticket-number" id="t_number">—</div>
+          </div>
+
+          <div class="qr-wrap">
+            <img id="t_qr" src="" alt="QR Code">
           </div>
 
           <div class="free-line">EINTRITT FREI</div>
@@ -417,11 +485,32 @@
       sendHeight();
     }
 
-    function fillTicket(name, persons, food, number) {
-      document.getElementById("t_name").textContent = name;
-      document.getElementById("t_persons").textContent = persons;
-      document.getElementById("t_food").textContent = food;
-      document.getElementById("t_number").textContent = number;
+    function makeQrValue(data) {
+      return [
+        "Gasthaus Alt Grieth",
+        "Heimatlieder Abend",
+        "Ticket: " + data.ticket_number,
+        "Name: " + data.first_name + " " + data.last_name,
+        "Personen: " + data.persons,
+        "Eten: " + data.food,
+        "Datum: 6. Juni 20:00 Uhr"
+      ].join(" | ");
+    }
+
+    function fillTicket(data) {
+      document.getElementById("t_first_name").textContent = data.first_name;
+      document.getElementById("t_last_name").textContent = data.last_name;
+      document.getElementById("t_email").textContent = data.email;
+      document.getElementById("t_phone").textContent = data.phone;
+      document.getElementById("t_persons").textContent = data.persons;
+      document.getElementById("t_food").textContent = data.food;
+      document.getElementById("t_number").textContent = data.ticket_number;
+
+      const qrValue = makeQrValue(data);
+      document.getElementById("t_qr").src =
+        "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data="
+        + encodeURIComponent(qrValue);
+
       document.getElementById("ticketBox").style.display = "block";
       sendHeight();
     }
@@ -446,47 +535,57 @@
     }
 
     function previewWithoutSaving() {
-      const name = document.getElementById("name").value.trim();
+      const first_name = document.getElementById("first_name").value.trim();
+      const last_name = document.getElementById("last_name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
       const persons = document.getElementById("persons").value;
       const food = document.getElementById("food").value;
 
-      if (!name) {
-        showMessage("Bitte geben Sie Ihren Namen ein.", true);
+      if (!first_name || !last_name || !email || !phone || !persons) {
+        showMessage("Bitte füllen Sie zuerst alle Felder aus.", true);
         return false;
       }
 
-      if (!persons || parseInt(persons, 10) < 1) {
-        showMessage("Bitte geben Sie eine gültige Personenzahl ein.", true);
-        return false;
-      }
+      fillTicket({
+        first_name,
+        last_name,
+        email,
+        phone,
+        persons,
+        food,
+        ticket_number: latestTicketNumber || "WIRD BEI RESERVIERUNG VERGEBEN"
+      });
 
-      fillTicket(name, persons, food, latestTicketNumber || "WIRD BEI RESERVIERUNG VERGEBEN");
       clearMessage();
       return true;
     }
 
     async function reserve() {
-      const name = document.getElementById("name").value.trim();
+      const first_name = document.getElementById("first_name").value.trim();
+      const last_name = document.getElementById("last_name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
       const persons = parseInt(document.getElementById("persons").value, 10);
       const food = document.getElementById("food").value;
       const btn = document.getElementById("reserveBtn");
 
-      if (!name) {
-        showMessage("Bitte geben Sie Ihren Namen ein.", true);
-        return;
-      }
-
-      if (!persons || persons < 1) {
-        showMessage("Bitte geben Sie eine gültige Personenzahl ein.", true);
-        return;
-      }
+      if (!first_name) return showMessage("Bitte geben Sie Ihren Vornamen ein.", true);
+      if (!last_name) return showMessage("Bitte geben Sie Ihren Achternamen ein.", true);
+      if (!email) return showMessage("Bitte geben Sie Ihre E-Mail ein.", true);
+      if (!phone) return showMessage("Bitte geben Sie Ihre Telefonnummer ein.", true);
+      if (!persons || persons < 1) return showMessage("Bitte geben Sie eine gültige Personenzahl ein.", true);
 
       clearMessage();
       btn.disabled = true;
       btn.textContent = "Reservierung läuft...";
 
       try {
-        const url = "/api/reserve?name=" + encodeURIComponent(name)
+        const url = "/api/reserve"
+          + "?first_name=" + encodeURIComponent(first_name)
+          + "&last_name=" + encodeURIComponent(last_name)
+          + "&email=" + encodeURIComponent(email)
+          + "&phone=" + encodeURIComponent(phone)
           + "&persons=" + encodeURIComponent(persons)
           + "&food=" + encodeURIComponent(food);
 
@@ -495,7 +594,7 @@
         if (data.success) {
           latestTicketNumber = data.ticket_number;
           latestReservationDone = true;
-          fillTicket(name, persons, food, latestTicketNumber);
+          fillTicket(data);
           setStatus(data.available_tables, data.available_seats);
           showMessage("Reservierung erfolgreich. Ihre Ticketnummer lautet: " + latestTicketNumber, false);
         } else {
