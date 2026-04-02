@@ -103,10 +103,6 @@
       gap: 14px 18px;
     }
 
-    .full {
-      grid-column: 1 / -1;
-    }
-
     label {
       display: block;
       margin: 0 0 6px;
@@ -117,8 +113,8 @@
     input,
     select {
       width: 100%;
-      min-height: 48px;
-      padding: 12px 14px;
+      min-height: 46px;
+      padding: 10px 12px;
       font-size: 16px;
       color: #160520;
       border: 1px solid #bdad82;
@@ -130,16 +126,17 @@
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     button {
-      flex: 1 1 260px;
-      min-height: 50px;
-      padding: 13px 16px;
-      font-size: 16px;
+      min-width: 220px;
+      min-height: 42px;
+      padding: 10px 16px;
+      font-size: 15px;
       border: none;
       cursor: pointer;
+      border-radius: 0;
     }
 
     .btn-primary {
@@ -237,7 +234,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 14px 28px;
       margin-bottom: 24px;
-      align-items: start;
     }
 
     .field.full {
@@ -255,7 +251,7 @@
 
     .field-value {
       display: block;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       word-break: break-word;
       min-height: 24px;
@@ -278,11 +274,11 @@
     }
 
     .ticket-number {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: 2px;
       word-break: break-word;
-      min-height: 34px;
+      min-height: 30px;
     }
 
     .qr-wrap {
@@ -290,13 +286,13 @@
       margin-top: 20px;
     }
 
-    #qrcode {
-      display: inline-block;
-      padding: 10px;
+    .qr-wrap img {
+      width: 150px;
+      height: 150px;
       background: #fff;
       border: 1px solid #bdad82;
-      min-width: 160px;
-      min-height: 160px;
+      padding: 8px;
+      display: inline-block;
     }
 
     .free-line {
@@ -323,15 +319,15 @@
       .form-box { padding: 16px; }
       .form-grid { grid-template-columns: 1fr; }
       .btn-row { flex-direction: column; gap: 10px; }
-      button { width: 100%; }
+      button { width: 100%; min-width: 0; }
       .preview-title { font-size: 18px; }
       .ticket { padding: 22px 16px 20px; border-width: 2px; }
       .ticket:before { top: 8px; right: 8px; bottom: 8px; left: 8px; }
       .ticket-title { font-size: 28px; letter-spacing: 2px; }
       .ticket-eventline { font-size: 15px; letter-spacing: 1px; }
       .ticket-grid { grid-template-columns: 1fr; gap: 12px; }
-      .field-value { font-size: 18px; }
-      .ticket-number { font-size: 22px; }
+      .field-value { font-size: 17px; }
+      .ticket-number { font-size: 20px; }
     }
 
     @media print {
@@ -429,15 +425,15 @@
       </div>
 
       <div class="btn-row">
-        <button class="btn-primary" id="reserveBtn" onclick="reserve()">Jetzt kostenlos reservieren</button>
-        <button class="btn-secondary" onclick="printTicket()">Ticket drucken / als PDF speichern</button>
+        <button class="btn-primary" id="reserveBtn" type="button">Jetzt kostenlos reservieren</button>
+        <button class="btn-secondary" id="printBtn" type="button">Ticket drucken / als PDF speichern</button>
       </div>
     </div>
 
     <div id="ticketArea">
       <div class="preview-title">VORSCHAU IHRES TICKETS</div>
 
-      <div class="ticket" id="ticketBox">
+      <div class="ticket">
         <div class="ticket-inner">
           <div class="ticket-topline">GASTHAUS ALT GRIETH</div>
           <div class="ticket-title">HEIMATLIEDER ABEND</div>
@@ -467,12 +463,12 @@
 
             <div class="field">
               <span class="field-label">Anzahl Personen</span>
-              <span class="field-value" id="t_persons">—</span>
+              <span class="field-value" id="t_persons">1</span>
             </div>
 
             <div class="field">
               <span class="field-label">Essen</span>
-              <span class="field-value" id="t_food">—</span>
+              <span class="field-value" id="t_food">Nein</span>
             </div>
 
             <div class="field">
@@ -497,7 +493,7 @@
           </div>
 
           <div class="qr-wrap">
-            <div id="qrcode"></div>
+            <img id="t_qr" alt="QR Code" src="" />
           </div>
 
           <div class="free-line">EINTRITT FREI</div>
@@ -511,22 +507,21 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <script>
-    let latestTicketNumber = "";
-    let latestReservationDone = false;
-    let qrCodeInstance = null;
+    var latestTicketNumber = "";
 
     function sendHeight() {
-      const height = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
+      var body = document.body;
+      var html = document.documentElement;
+      var height = Math.max(
+        body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight
       );
-      window.parent.postMessage({ type: "altgrieth-ticket-height", height }, "*");
+      window.parent.postMessage({ type: "altgrieth-ticket-height", height: height }, "*");
     }
 
     function showMessage(text, isError) {
-      const box = document.getElementById("messageBox");
+      var box = document.getElementById("messageBox");
       box.style.display = "block";
       box.innerHTML = text;
       box.style.borderColor = isError ? "#9f3a38" : "#bdad82";
@@ -536,7 +531,7 @@
     }
 
     function clearMessage() {
-      const box = document.getElementById("messageBox");
+      var box = document.getElementById("messageBox");
       box.style.display = "none";
       box.innerHTML = "";
       sendHeight();
@@ -548,15 +543,8 @@
       sendHeight();
     }
 
-    function getFormData() {
-      return {
-        first_name: document.getElementById("first_name").value.trim(),
-        last_name: document.getElementById("last_name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        phone: document.getElementById("phone").value.trim(),
-        persons: document.getElementById("persons").value,
-        food: document.getElementById("food").value
-      };
+    function qrUrl(text) {
+      return "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(text);
     }
 
     function buildQrText(data) {
@@ -570,18 +558,18 @@
         "Personen: " + data.persons,
         "Essen: " + data.food,
         "Datum: 6. Juni 20:00 Uhr"
-      ].join("\n");
+      ].join(" | ");
     }
 
-    function renderQr(data) {
-      const target = document.getElementById("qrcode");
-      target.innerHTML = "";
-
-      qrCodeInstance = new QRCode(target, {
-        text: buildQrText(data),
-        width: 140,
-        height: 140
-      });
+    function getFormData() {
+      return {
+        first_name: document.getElementById("first_name").value.replace(/^\s+|\s+$/g, ""),
+        last_name: document.getElementById("last_name").value.replace(/^\s+|\s+$/g, ""),
+        email: document.getElementById("email").value.replace(/^\s+|\s+$/g, ""),
+        phone: document.getElementById("phone").value.replace(/^\s+|\s+$/g, ""),
+        persons: document.getElementById("persons").value,
+        food: document.getElementById("food").value
+      };
     }
 
     function fillTicket(data) {
@@ -589,96 +577,112 @@
       document.getElementById("t_last_name").textContent = data.last_name || "—";
       document.getElementById("t_email").textContent = data.email || "—";
       document.getElementById("t_phone").textContent = data.phone || "—";
-      document.getElementById("t_persons").textContent = data.persons || "—";
-      document.getElementById("t_food").textContent = data.food || "—";
+      document.getElementById("t_persons").textContent = data.persons || "1";
+      document.getElementById("t_food").textContent = data.food || "Nein";
       document.getElementById("t_number").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
       document.getElementById("t_number_inline").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
-      renderQr(data);
-      sendHeight();
-    }
 
-    function updateLivePreview() {
-      const data = getFormData();
-
-      fillTicket({
+      var qrText = buildQrText({
+        ticket_number: data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN",
         first_name: data.first_name || "—",
         last_name: data.last_name || "—",
         email: data.email || "—",
         phone: data.phone || "—",
-        persons: data.persons || "—",
-        food: data.food || "Nein",
+        persons: data.persons || "1",
+        food: data.food || "Nein"
+      });
+
+      document.getElementById("t_qr").src = qrUrl(qrText);
+      sendHeight();
+    }
+
+    function updatePreview() {
+      var form = getFormData();
+      fillTicket({
+        first_name: form.first_name || "—",
+        last_name: form.last_name || "—",
+        email: form.email || "—",
+        phone: form.phone || "—",
+        persons: form.persons || "1",
+        food: form.food || "Nein",
         ticket_number: latestTicketNumber || "WIRD BEI RESERVIERUNG VERGEBEN"
       });
     }
 
-    async function apiGet(path) {
-      const res = await fetch(path, { method: "GET" });
-      if (!res.ok) throw new Error("Request failed");
-      return await res.json();
+    function apiGet(path, onSuccess, onError) {
+      fetch(path, { method: "GET" })
+        .then(function(res) {
+          if (!res.ok) throw new Error("Request failed");
+          return res.json();
+        })
+        .then(onSuccess)
+        .catch(onError);
     }
 
-    async function loadStatus() {
-      try {
-        const data = await apiGet("/api/status");
-        if (data.success) {
-          setStatus(data.available_tables, data.available_seats);
-        } else {
-          showMessage("Status konnte nicht geladen werden.", true);
+    function loadStatus() {
+      apiGet(
+        "/api/status",
+        function(data) {
+          if (data && data.success) {
+            setStatus(data.available_tables, data.available_seats);
+          } else {
+            showMessage("Status konnte nicht geladen werden.", true);
+          }
+        },
+        function() {
+          showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
         }
-      } catch (err) {
-        showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
-      }
+      );
     }
 
-    async function reserve() {
-      const data = getFormData();
-      const personsNumber = parseInt(data.persons, 10);
-      const btn = document.getElementById("reserveBtn");
+    function reserve() {
+      var form = getFormData();
+      var personsNumber = parseInt(form.persons, 10);
+      var btn = document.getElementById("reserveBtn");
 
-      if (!data.first_name) return showMessage("Bitte geben Sie Ihren Vornamen ein.", true);
-      if (!data.last_name) return showMessage("Bitte geben Sie Ihren Nachnamen ein.", true);
-      if (!data.email) return showMessage("Bitte geben Sie Ihre E-Mail ein.", true);
-      if (!data.phone) return showMessage("Bitte geben Sie Ihre Telefonnummer ein.", true);
+      if (!form.first_name) return showMessage("Bitte geben Sie Ihren Vornamen ein.", true);
+      if (!form.last_name) return showMessage("Bitte geben Sie Ihren Nachnamen ein.", true);
+      if (!form.email) return showMessage("Bitte geben Sie Ihre E-Mail ein.", true);
+      if (!form.phone) return showMessage("Bitte geben Sie Ihre Telefonnummer ein.", true);
       if (!personsNumber || personsNumber < 1) return showMessage("Bitte geben Sie eine gültige Personenzahl ein.", true);
 
       clearMessage();
       btn.disabled = true;
       btn.textContent = "Reservierung läuft...";
 
-      try {
-        const url = "/api/reserve"
-          + "?first_name=" + encodeURIComponent(data.first_name)
-          + "&last_name=" + encodeURIComponent(data.last_name)
-          + "&email=" + encodeURIComponent(data.email)
-          + "&phone=" + encodeURIComponent(data.phone)
-          + "&persons=" + encodeURIComponent(personsNumber)
-          + "&food=" + encodeURIComponent(data.food);
+      var url = "/api/reserve"
+        + "?first_name=" + encodeURIComponent(form.first_name)
+        + "&last_name=" + encodeURIComponent(form.last_name)
+        + "&email=" + encodeURIComponent(form.email)
+        + "&phone=" + encodeURIComponent(form.phone)
+        + "&persons=" + encodeURIComponent(personsNumber)
+        + "&food=" + encodeURIComponent(form.food);
 
-        const result = await apiGet(url);
-
-        if (result.success) {
-          latestTicketNumber = result.ticket_number;
-          latestReservationDone = true;
-          fillTicket(result);
-          setStatus(result.available_tables, result.available_seats);
-          showMessage("Reservierung erfolgreich. Ihre Ticketnummer lautet: " + latestTicketNumber, false);
-        } else {
-          showMessage(result.message || "Reservierung nicht möglich.", true);
-          if (typeof result.available_tables !== "undefined" && typeof result.available_seats !== "undefined") {
+      apiGet(
+        url,
+        function(result) {
+          if (result && result.success) {
+            latestTicketNumber = result.ticket_number;
+            fillTicket(result);
             setStatus(result.available_tables, result.available_seats);
+            showMessage("Reservierung erfolgreich. Ihre Ticketnummer lautet: " + latestTicketNumber, false);
+          } else {
+            showMessage((result && result.message) ? result.message : "Reservierung nicht möglich.", true);
           }
+          btn.disabled = false;
+          btn.textContent = "Jetzt kostenlos reservieren";
+          loadStatus();
+        },
+        function() {
+          btn.disabled = false;
+          btn.textContent = "Jetzt kostenlos reservieren";
+          showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
         }
-      } catch (err) {
-        showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = "Jetzt kostenlos reservieren";
-        loadStatus();
-      }
+      );
     }
 
     function printTicket() {
-      updateLivePreview();
+      updatePreview();
       setTimeout(function() {
         window.print();
       }, 120);
@@ -686,12 +690,16 @@
 
     window.addEventListener("load", function() {
       loadStatus();
-      updateLivePreview();
+      updatePreview();
 
-      ["first_name","last_name","email","phone","persons","food"].forEach(function(id) {
-        document.getElementById(id).addEventListener("input", updateLivePreview);
-        document.getElementById(id).addEventListener("change", updateLivePreview);
-      });
+      var ids = ["first_name", "last_name", "email", "phone", "persons", "food"];
+      for (var i = 0; i < ids.length; i++) {
+        document.getElementById(ids[i]).addEventListener("input", updatePreview);
+        document.getElementById(ids[i]).addEventListener("change", updatePreview);
+      }
+
+      document.getElementById("reserveBtn").addEventListener("click", reserve);
+      document.getElementById("printBtn").addEventListener("click", printTicket);
 
       sendHeight();
       setTimeout(sendHeight, 300);
