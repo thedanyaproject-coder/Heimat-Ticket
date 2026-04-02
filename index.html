@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reservierung – Gasthaus Alt Grieth</title>
   <meta name="robots" content="noindex" />
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
   <style>
     * { box-sizing: border-box; }
 
@@ -21,10 +25,10 @@
       padding: 24px;
     }
 
-    .topline {
+    .ticket-topline {
       text-align: center;
       font-size: 13px;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       margin-bottom: 10px;
       color: #6a5a36;
     }
@@ -130,8 +134,8 @@
     }
 
     button {
-      min-width: 220px;
-      min-height: 42px;
+      flex: 1 1 260px;
+      min-height: 44px;
       padding: 10px 16px;
       font-size: 15px;
       border: none;
@@ -163,24 +167,26 @@
 
     .ticket {
       display: block;
+      width: 100%;
       max-width: 880px;
       margin: 0 auto 30px;
       padding: 36px 34px 30px;
       position: relative;
       background:
-        linear-gradient(rgba(255,251,242,0.96), rgba(255,251,242,0.96)),
+        linear-gradient(rgba(255,251,242,0.97), rgba(255,251,242,0.97)),
         repeating-linear-gradient(
           0deg,
-          rgba(189,173,130,0.06),
-          rgba(189,173,130,0.06) 2px,
+          rgba(189,173,130,0.05),
+          rgba(189,173,130,0.05) 2px,
           transparent 2px,
           transparent 8px
         );
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
       border: 3px solid #bdad82;
+      overflow: hidden;
     }
 
-    .ticket:before {
+    .ticket::before {
       content: "";
       position: absolute;
       top: 12px;
@@ -191,17 +197,19 @@
       pointer-events: none;
     }
 
+    .ticket::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at center, rgba(255,255,255,0.18) 0, rgba(255,255,255,0.18) 2px, transparent 2px);
+      background-size: 32px 32px;
+      opacity: 0.22;
+      pointer-events: none;
+    }
+
     .ticket-inner {
       position: relative;
       z-index: 2;
-    }
-
-    .ticket-topline {
-      text-align: center;
-      font-size: 13px;
-      letter-spacing: 4px;
-      margin-bottom: 14px;
-      color: #6a5a36;
     }
 
     .ticket-title {
@@ -262,7 +270,7 @@
       padding: 18px 18px 16px;
       border: 2px solid #bdad82;
       text-align: center;
-      background: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.68);
     }
 
     .ticket-number-label {
@@ -318,49 +326,23 @@
       .status-value { font-size: 30px; }
       .form-box { padding: 16px; }
       .form-grid { grid-template-columns: 1fr; }
-      .btn-row { flex-direction: column; gap: 10px; }
-      button { width: 100%; min-width: 0; min-height: 40px; }
+      .btn-row { gap: 10px; }
+      button {
+        flex: 1 1 calc(50% - 5px);
+        min-width: 0;
+        min-height: 40px;
+        font-size: 14px;
+        padding: 8px 10px;
+      }
       .preview-title { font-size: 18px; }
       .ticket { padding: 22px 16px 20px; border-width: 2px; }
-      .ticket:before { top: 8px; right: 8px; bottom: 8px; left: 8px; }
+      .ticket::before { top: 8px; right: 8px; bottom: 8px; left: 8px; }
       .ticket-title { font-size: 28px; letter-spacing: 2px; }
       .ticket-eventline { font-size: 15px; letter-spacing: 1px; }
       .ticket-grid { grid-template-columns: 1fr; gap: 12px; }
       .field-value { font-size: 17px; }
       .ticket-number { font-size: 20px; }
-    }
-
-    @media print {
-      body * { visibility: hidden !important; }
-      #ticketArea, #ticketArea * { visibility: visible !important; }
-      #ticketArea {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .status-grid,
-      .message,
-      .form-box,
-      h1,
-      .intro,
-      .preview-title {
-        display: none !important;
-      }
-      .ticket {
-        display: block !important;
-        max-width: none;
-        width: 100%;
-        margin: 0;
-        padding: 28px;
-        box-shadow: none;
-        page-break-inside: avoid;
-      }
-      .ticket-grid {
-        grid-template-columns: 1fr 1fr !important;
-      }
+      .qr-wrap img { width: 130px; height: 130px; }
     }
   </style>
 </head>
@@ -425,8 +407,8 @@
       </div>
 
       <div class="btn-row">
-        <button class="btn-primary" id="reserveBtn" type="button">Jetzt kostenlos reservieren</button>
-        <button class="btn-secondary" id="printBtn" type="button">Ticket drucken / als PDF speichern</button>
+        <button class="btn-primary" id="reserveBtn" type="button">Reservieren</button>
+        <button class="btn-secondary" id="pdfBtn" type="button">PDF herunterladen</button>
       </div>
     </div>
 
@@ -544,7 +526,7 @@
     }
 
     function qrUrl(text) {
-      return "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(text);
+      return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(text);
     }
 
     function buildQrText(data) {
@@ -671,22 +653,71 @@
           }
 
           btn.disabled = false;
-          btn.textContent = "Jetzt kostenlos reservieren";
+          btn.textContent = "Reservieren";
           loadStatus();
         },
         function() {
           btn.disabled = false;
-          btn.textContent = "Jetzt kostenlos reservieren";
+          btn.textContent = "Reservieren";
           showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
         }
       );
     }
 
-    function printTicket() {
+    function downloadPdf() {
       updatePreview();
-      setTimeout(function() {
-        window.print();
-      }, 120);
+      var ticket = document.querySelector(".ticket");
+      var clone = ticket.cloneNode(true);
+      clone.style.maxWidth = "794px";
+      clone.style.width = "794px";
+      clone.style.margin = "0";
+      clone.style.boxShadow = "none";
+
+      var wrapper = document.createElement("div");
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-99999px";
+      wrapper.style.top = "0";
+      wrapper.style.width = "794px";
+      wrapper.style.background = "#fff";
+      wrapper.appendChild(clone);
+      document.body.appendChild(wrapper);
+
+      html2canvas(clone, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true
+      }).then(function(canvas) {
+        document.body.removeChild(wrapper);
+
+        var imgData = canvas.toDataURL("image/jpeg", 0.98);
+        var pdf = new window.jspdf.jsPDF({
+          orientation: "p",
+          unit: "mm",
+          format: "a4"
+        });
+
+        var pdfWidth = 210;
+        var pdfHeight = 297;
+        var imgWidth = pdfWidth;
+        var imgHeight = canvas.height * imgWidth / canvas.width;
+
+        if (imgHeight <= pdfHeight) {
+          pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
+        } else {
+          var position = 0;
+          var remainingHeight = imgHeight;
+
+          while (remainingHeight > 0) {
+            pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+            remainingHeight -= pdfHeight;
+            position -= pdfHeight;
+            if (remainingHeight > 0) pdf.addPage();
+          }
+        }
+
+        var fileName = "Heimatlieder-Abend-" + (latestTicketNumber || "Ticket") + ".pdf";
+        pdf.save(fileName);
+      });
     }
 
     window.addEventListener("load", function() {
@@ -700,7 +731,7 @@
       }
 
       document.getElementById("reserveBtn").addEventListener("click", reserve);
-      document.getElementById("printBtn").addEventListener("click", printTicket);
+      document.getElementById("pdfBtn").addEventListener("click", downloadPdf);
 
       sendHeight();
       setTimeout(sendHeight, 300);
