@@ -1,133 +1,515 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Heimatlieder Abend Tickets</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Heimatlieder Abend – Tickets</title>
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      padding:0;
+      background:#fffdf8;
+      color:#160520;
+      font-family:Arial,sans-serif;
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:24px;
+    }
+    h1{
+      margin:0 0 14px 0;
+      text-align:center;
+      letter-spacing:2px;
+      font-size:34px;
+      line-height:1.2;
+    }
+    .intro{
+      max-width:820px;
+      margin:0 auto 24px auto;
+      text-align:center;
+      font-size:16px;
+      line-height:1.7;
+    }
+    .status-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      max-width:820px;
+      margin:0 auto 24px auto;
+    }
+    .status-box,
+    .form-box,
+    .ticket{
+      background:#fff;
+      border:2px solid #bdad82;
+    }
+    .status-box{
+      padding:18px;
+      text-align:center;
+    }
+    .status-label{
+      display:block;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color:#6a5a36;
+      margin-bottom:8px;
+    }
+    .status-value{
+      font-size:34px;
+      font-weight:700;
+    }
+    .message{
+      max-width:820px;
+      margin:0 auto 18px auto;
+      padding:14px 16px;
+      display:none;
+      text-align:center;
+      font-size:15px;
+      line-height:1.5;
+      border:1px solid #bdad82;
+      background:#fff;
+    }
+    .form-box{
+      max-width:820px;
+      margin:0 auto 30px auto;
+      padding:24px;
+    }
+    label{
+      display:block;
+      margin:14px 0 6px 0;
+      font-weight:700;
+      font-size:15px;
+    }
+    input,select{
+      width:100%;
+      min-height:48px;
+      padding:12px 14px;
+      font-size:16px;
+      color:#160520;
+      border:1px solid #bdad82;
+      background:#fff;
+      appearance:none;
+    }
+    .btn-row{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:22px;
+    }
+    button{
+      flex:1 1 260px;
+      min-height:50px;
+      padding:13px 16px;
+      font-size:16px;
+      border:none;
+      cursor:pointer;
+    }
+    .btn-primary{
+      background:#160520;
+      color:#fff;
+    }
+    .btn-secondary{
+      background:#bdad82;
+      color:#160520;
+    }
+    button[disabled]{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+    .preview-title{
+      text-align:center;
+      font-size:22px;
+      letter-spacing:2px;
+      margin:8px 0 18px 0;
+    }
+    .ticket{
+      display:none;
+      max-width:820px;
+      margin:0 auto 30px auto;
+      padding:36px 34px 30px 34px;
+      position:relative;
+      background:
+        linear-gradient(rgba(255,251,242,0.96), rgba(255,251,242,0.96)),
+        repeating-linear-gradient(
+          0deg,
+          rgba(189,173,130,0.06),
+          rgba(189,173,130,0.06) 2px,
+          transparent 2px,
+          transparent 8px
+        );
+      box-shadow:0 8px 24px rgba(0,0,0,0.08);
+      border:3px solid #bdad82;
+    }
+    .ticket:before{
+      content:"";
+      position:absolute;
+      top:12px;right:12px;bottom:12px;left:12px;
+      border:1px solid rgba(189,173,130,0.9);
+      pointer-events:none;
+    }
+    .ticket-inner{
+      position:relative;
+      z-index:2;
+    }
+    .topline{
+      text-align:center;
+      font-size:13px;
+      letter-spacing:4px;
+      margin-bottom:14px;
+    }
+    .main-title{
+      text-align:center;
+      font-size:42px;
+      line-height:1.1;
+      letter-spacing:4px;
+      font-weight:700;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .eventline{
+      text-align:center;
+      font-size:18px;
+      letter-spacing:2px;
+      margin-bottom:24px;
+      line-height:1.5;
+    }
+    .divider{
+      width:120px;
+      height:1px;
+      background:#bdad82;
+      margin:0 auto 24px auto;
+    }
+    .ticket-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px 28px;
+      margin-bottom:24px;
+    }
+    .field.full{
+      grid-column:1 / -1;
+    }
+    .field-label{
+      display:block;
+      font-size:12px;
+      letter-spacing:2px;
+      margin-bottom:4px;
+      color:#6a5a36;
+      text-transform:uppercase;
+    }
+    .field-value{
+      display:block;
+      font-size:20px;
+      font-weight:700;
+      word-break:break-word;
+    }
+    .ticket-number-box{
+      margin-top:10px;
+      padding:18px 18px 16px 18px;
+      border:2px solid #bdad82;
+      text-align:center;
+      background:rgba(255,255,255,0.55);
+    }
+    .ticket-number-label{
+      font-size:12px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      margin-bottom:8px;
+      color:#6a5a36;
+    }
+    .ticket-number{
+      font-size:28px;
+      font-weight:700;
+      letter-spacing:2px;
+      word-break:break-word;
+    }
+    .free-line{
+      margin-top:12px;
+      text-align:center;
+      font-size:15px;
+      letter-spacing:2px;
+      font-weight:700;
+    }
+    .footer-note{
+      margin-top:20px;
+      text-align:center;
+      font-size:14px;
+      line-height:1.7;
+    }
 
-<style>
-body{
-  margin:0;
-  background:#fffdf8;
-  font-family:Arial,sans-serif;
-  color:#160520;
-}
+    @media (max-width:640px){
+      .wrap{padding:14px}
+      h1{font-size:28px}
+      .intro{font-size:15px;margin-bottom:20px}
+      .status-grid{grid-template-columns:1fr;gap:12px}
+      .status-value{font-size:30px}
+      .form-box{padding:16px}
+      .btn-row{flex-direction:column;gap:10px}
+      button{width:100%}
+      .preview-title{font-size:18px}
+      .ticket{
+        padding:22px 16px 20px 16px;
+        border-width:2px;
+      }
+      .ticket:before{
+        top:8px;right:8px;bottom:8px;left:8px;
+      }
+      .main-title{font-size:28px;letter-spacing:2px}
+      .eventline{font-size:15px;letter-spacing:1px}
+      .ticket-grid{grid-template-columns:1fr;gap:12px}
+      .field-value{font-size:18px}
+      .ticket-number{font-size:22px}
+    }
 
-.container{
-  max-width:900px;
-  margin:0 auto;
-  padding:20px;
-}
-
-h1{
-  text-align:center;
-  letter-spacing:2px;
-}
-
-.box{
-  border:2px solid #bdad82;
-  padding:15px;
-  margin-bottom:20px;
-  text-align:center;
-}
-
-input,select,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  font-size:16px;
-}
-
-button{
-  background:#160520;
-  color:#fff;
-  border:none;
-  cursor:pointer;
-}
-
-.ticket{
-  display:none;
-  border:3px solid #bdad82;
-  padding:20px;
-  margin-top:20px;
-  background:#fff;
-}
-</style>
-
+    @media print{
+      body *{visibility:hidden !important}
+      #ticketArea, #ticketArea *{visibility:visible !important}
+      #ticketArea{
+        position:absolute;
+        left:0;top:0;
+        width:100%;
+        margin:0;padding:0;
+      }
+      .status-grid,.message,.form-box,h1,.intro,.preview-title{
+        display:none !important;
+      }
+      .ticket{
+        display:block !important;
+        max-width:none;
+        width:100%;
+        margin:0;
+        padding:28px;
+        box-shadow:none;
+        page-break-inside:avoid;
+      }
+      .ticket-grid{
+        grid-template-columns:1fr 1fr !important;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="wrap">
+    <h1>HEIMATLIEDER ABEND – TICKETS</h1>
 
-<div class="container">
+    <div class="intro">
+      Der Eintritt zum Heimatlieder Abend im Gasthaus Alt Grieth ist frei und eine Reservierung ist nicht erforderlich.<br><br>
+      Wer sich jedoch einen Sitzplatz an einem Tisch sichern möchte, kann hier kostenlos ein Ticket bestellen.<br>
+      Nach der Bestellung wird sofort angezeigt, wie viele Tische und Sitzplätze noch verfügbar sind.
+    </div>
 
-<h1>HEIMATLIEDER ABEND</h1>
+    <div class="status-grid">
+      <div class="status-box">
+        <span class="status-label">Noch verfügbare Tische</span>
+        <span class="status-value" id="availableTables">-</span>
+      </div>
+      <div class="status-box">
+        <span class="status-label">Noch verfügbare Sitzplätze</span>
+        <span class="status-value" id="availableSeats">-</span>
+      </div>
+    </div>
 
-<div class="box">
-  Noch verfügbare Tische: <strong id="tables">-</strong><br>
-  Noch verfügbare Sitzplätze: <strong id="seats">-</strong>
-</div>
+    <div class="message" id="messageBox"></div>
 
-<div class="box">
-  <input id="name" placeholder="Name">
-  <input id="persons" type="number" value="1">
-  <select id="food">
-    <option>Ja</option>
-    <option selected>Nein</option>
-  </select>
-  <button onclick="reserve()">Jetzt reservieren</button>
-</div>
+    <div class="form-box">
+      <label for="name">Name</label>
+      <input id="name" type="text" placeholder="Ihr Name">
 
-<div class="ticket" id="ticket">
-  <h2>TICKET</h2>
-  Name: <span id="t_name"></span><br>
-  Personen: <span id="t_persons"></span><br>
-  Essen: <span id="t_food"></span><br><br>
-  <strong id="t_number"></strong>
-</div>
+      <label for="persons">Anzahl Personen</label>
+      <input id="persons" type="number" min="1" value="1">
 
-</div>
+      <label for="food">Essen</label>
+      <select id="food">
+        <option value="Ja">Ja</option>
+        <option value="Nein" selected>Nein</option>
+      </select>
 
-<script>
-var API = "https://script.google.com/macros/s/AKfycbzURyof90tecaKRlR-iqmLwnDpq69xzT5L9Te7OKGsp35EcY1VtXWidLz092f6QLkd64g/exec";
+      <div class="btn-row">
+        <button class="btn-primary" id="reserveBtn" onclick="reserve()">Jetzt kostenlos reservieren</button>
+        <button class="btn-secondary" onclick="printTicket()">Ticket drucken / als PDF speichern</button>
+      </div>
+    </div>
 
-function jsonp(params, callback){
-  var cb = "cb_" + Math.random().toString(36).substring(2);
-  window[cb] = function(data){
-    callback(data);
-    delete window[cb];
-  };
-  var s = document.createElement("script");
-  s.src = API + "?" + params + "&callback=" + cb;
-  document.body.appendChild(s);
-}
+    <div id="ticketArea">
+      <div class="preview-title">VORSCHAU IHRES TICKETS</div>
 
-function load(){
-  jsonp("action=status", function(d){
-    document.getElementById("tables").innerHTML = d.available_tables;
-    document.getElementById("seats").innerHTML = d.available_seats;
-  });
-}
+      <div class="ticket" id="ticketBox">
+        <div class="ticket-inner">
+          <div class="topline">GASTHAUS ALT GRIETH</div>
+          <div class="main-title">HEIMATLIEDER ABEND</div>
+          <div class="eventline">SAMSTAG · 6. JUNI · 20:00 UHR</div>
+          <div class="divider"></div>
 
-function reserve(){
-  var name = document.getElementById("name").value;
-  var persons = document.getElementById("persons").value;
-  var food = document.getElementById("food").value;
+          <div class="ticket-grid">
+            <div class="field">
+              <span class="field-label">Name</span>
+              <span class="field-value" id="t_name">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Anzahl Personen</span>
+              <span class="field-value" id="t_persons">—</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Datum</span>
+              <span class="field-value">6. Juni</span>
+            </div>
+            <div class="field">
+              <span class="field-label">Uhrzeit</span>
+              <span class="field-value">20:00 Uhr</span>
+            </div>
+            <div class="field full">
+              <span class="field-label">Essen</span>
+              <span class="field-value" id="t_food">—</span>
+            </div>
+          </div>
 
-  jsonp("action=reserve&name="+encodeURIComponent(name)+"&persons="+persons+"&food="+food, function(d){
-    if(d.success){
-      document.getElementById("ticket").style.display="block";
-      document.getElementById("t_name").innerHTML=name;
-      document.getElementById("t_persons").innerHTML=persons;
-      document.getElementById("t_food").innerHTML=food;
-      document.getElementById("t_number").innerHTML=d.ticket_number;
-      load();
-    } else {
-      alert(d.message);
+          <div class="ticket-number-box">
+            <div class="ticket-number-label">Ticketnummer</div>
+            <div class="ticket-number" id="t_number">—</div>
+          </div>
+
+          <div class="free-line">EINTRITT FREI</div>
+
+          <div class="footer-note">
+            Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
+            Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var API = "https://script.google.com/macros/s/AKfycbzURyof90tecaKRlR-iqmLwnDpq69xzT5L9Te7OKGsp35EcY1VtXWidLz092f6QLkd64g/exec";
+    var latestTicketNumber = "";
+    var latestReservationDone = false;
+
+    function showMessage(text, isError){
+      var box = document.getElementById("messageBox");
+      box.style.display = "block";
+      box.innerHTML = text;
+      box.style.borderColor = isError ? "#9f3a38" : "#bdad82";
+      box.style.background = isError ? "#fff4f4" : "#fff";
+      box.style.color = isError ? "#7a1f1d" : "#160520";
     }
-  });
-}
 
-load();
-</script>
+    function clearMessage(){
+      var box = document.getElementById("messageBox");
+      box.style.display = "none";
+      box.innerHTML = "";
+    }
 
+    function setStatus(tables, seats){
+      document.getElementById("availableTables").innerHTML = tables;
+      document.getElementById("availableSeats").innerHTML = seats;
+    }
+
+    async function loadStatus(){
+      try{
+        var res = await fetch(API + "?action=status");
+        var data = await res.json();
+
+        if(data.success){
+          setStatus(data.available_tables, data.available_seats);
+        } else {
+          showMessage("Status konnte nicht geladen werden.", true);
+        }
+      } catch(err){
+        showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
+      }
+    }
+
+    function fillTicket(name, persons, food, number){
+      document.getElementById("t_name").innerHTML = name;
+      document.getElementById("t_persons").innerHTML = persons;
+      document.getElementById("t_food").innerHTML = food;
+      document.getElementById("t_number").innerHTML = number;
+      document.getElementById("ticketBox").style.display = "block";
+    }
+
+    function previewWithoutSaving(){
+      var name = document.getElementById("name").value.replace(/^\s+|\s+$/g, "");
+      var persons = document.getElementById("persons").value;
+      var food = document.getElementById("food").value;
+
+      if(!name){
+        showMessage("Bitte geben Sie Ihren Namen ein.", true);
+        return false;
+      }
+
+      if(!persons || parseInt(persons, 10) < 1){
+        showMessage("Bitte geben Sie eine gültige Personenzahl ein.", true);
+        return false;
+      }
+
+      fillTicket(name, persons, food, latestTicketNumber || "WIRD BEI RESERVIERUNG VERGEBEN");
+      clearMessage();
+      return true;
+    }
+
+    async function reserve(){
+      var name = document.getElementById("name").value.replace(/^\s+|\s+$/g, "");
+      var persons = parseInt(document.getElementById("persons").value, 10);
+      var food = document.getElementById("food").value;
+      var btn = document.getElementById("reserveBtn");
+
+      if(!name){
+        showMessage("Bitte geben Sie Ihren Namen ein.", true);
+        return;
+      }
+
+      if(!persons || persons < 1){
+        showMessage("Bitte geben Sie eine gültige Personenzahl ein.", true);
+        return;
+      }
+
+      clearMessage();
+      btn.disabled = true;
+      btn.innerHTML = "Reservierung läuft...";
+
+      try{
+        var url = API
+          + "?action=reserve"
+          + "&name=" + encodeURIComponent(name)
+          + "&persons=" + encodeURIComponent(persons)
+          + "&food=" + encodeURIComponent(food);
+
+        var res = await fetch(url);
+        var data = await res.json();
+
+        if(data.success){
+          latestTicketNumber = data.ticket_number;
+          latestReservationDone = true;
+          fillTicket(name, persons, food, latestTicketNumber);
+          setStatus(data.available_tables, data.available_seats);
+          showMessage("Reservierung erfolgreich. Ihre Ticketnummer lautet: " + latestTicketNumber, false);
+        } else {
+          showMessage(data.message || "Reservierung nicht möglich.", true);
+          if(typeof data.available_tables !== "undefined" && typeof data.available_seats !== "undefined"){
+            setStatus(data.available_tables, data.available_seats);
+          }
+        }
+      } catch(err){
+        showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = "Jetzt kostenlos reservieren";
+      loadStatus();
+    }
+
+    function printTicket(){
+      if (!latestReservationDone) {
+        if (!previewWithoutSaving()) return;
+      }
+      setTimeout(function(){
+        window.print();
+      }, 120);
+    }
+
+    loadStatus();
+  </script>
 </body>
 </html>
