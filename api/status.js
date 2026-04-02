@@ -3,7 +3,6 @@ module.exports = async function (req, res) {
     const response = await fetch(
       "https://script.google.com/macros/s/AKfycbzURyof90tecaKRlR-iqmLwnDpq69xzT5L9Te7OKGsp35EcY1VtXWidLz092f6QLkd64g/exec?action=status"
     );
-
     const text = await response.text();
 
     res.setHeader("Content-Type", "application/json; charset=utf-8");
