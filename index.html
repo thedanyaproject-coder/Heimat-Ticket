@@ -319,7 +319,7 @@
       .form-box { padding: 16px; }
       .form-grid { grid-template-columns: 1fr; }
       .btn-row { flex-direction: column; gap: 10px; }
-      button { width: 100%; min-width: 0; }
+      button { width: 100%; min-width: 0; min-height: 40px; }
       .preview-title { font-size: 18px; }
       .ticket { padding: 22px 16px 20px; border-width: 2px; }
       .ticket:before { top: 8px; right: 8px; bottom: 8px; left: 8px; }
@@ -669,6 +669,7 @@
           } else {
             showMessage((result && result.message) ? result.message : "Reservierung nicht möglich.", true);
           }
+
           btn.disabled = false;
           btn.textContent = "Jetzt kostenlos reservieren";
           loadStatus();
