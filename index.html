@@ -22,7 +22,7 @@
     .wrap {
       max-width: 860px;
       margin: 0 auto;
-      padding: 14px;
+      padding: 12px;
     }
 
     .page-topline {
@@ -43,7 +43,7 @@
 
     .intro {
       max-width: 760px;
-      margin: 0 auto 18px;
+      margin: 0 auto 16px;
       text-align: center;
       font-size: 15px;
       line-height: 1.6;
@@ -54,7 +54,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       max-width: 760px;
-      margin: 0 auto 18px;
+      margin: 0 auto 16px;
     }
 
     .status-box,
@@ -97,7 +97,7 @@
 
     .form-box {
       max-width: 760px;
-      margin: 0 auto 22px;
+      margin: 0 auto 20px;
       padding: 16px;
     }
 
@@ -165,16 +165,17 @@
 
     .sheet {
       width: 100%;
-      max-width: 760px;
+      max-width: 794px;
+      min-height: 1123px;
       margin: 0 auto 18px;
-      padding: 12px;
+      padding: 10px;
       position: relative;
       background:
         linear-gradient(rgba(255,251,242,0.985), rgba(255,251,242,0.985)),
         repeating-linear-gradient(
           0deg,
-          rgba(189,173,130,0.035),
-          rgba(189,173,130,0.035) 2px,
+          rgba(189,173,130,0.03),
+          rgba(189,173,130,0.03) 2px,
           transparent 2px,
           transparent 8px
         );
@@ -185,10 +186,10 @@
     .sheet::before {
       content: "";
       position: absolute;
-      top: 8px;
-      right: 8px;
-      bottom: 8px;
-      left: 8px;
+      top: 7px;
+      right: 7px;
+      bottom: 7px;
+      left: 7px;
       border: 1px solid rgba(189,173,130,0.95);
       pointer-events: none;
       z-index: 1;
@@ -200,10 +201,10 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%) rotate(-90deg);
-      font-size: 86px;
+      font-size: 92px;
       font-weight: 700;
       letter-spacing: 8px;
-      color: rgba(189,173,130,0.07);
+      color: rgba(189,173,130,0.06);
       white-space: nowrap;
       pointer-events: none;
       z-index: 1;
@@ -212,6 +213,10 @@
     .ticket-half {
       position: relative;
       z-index: 2;
+      min-height: 525px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       padding: 2px 2px 0;
     }
 
@@ -228,7 +233,7 @@
     }
 
     .ticket-title {
-      font-size: 26px;
+      font-size: 27px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -325,6 +330,11 @@
       text-align: center;
     }
 
+    .qr-wrap a {
+      display: inline-block;
+      text-decoration: none;
+    }
+
     .qr-wrap img {
       width: 100px;
       height: 100px;
@@ -342,7 +352,7 @@
 
     .cut-line {
       position: relative;
-      margin: 10px 0;
+      margin: 8px 0;
       border-top: 2px dashed #bdad82;
       z-index: 2;
     }
@@ -360,8 +370,8 @@
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 10px; }
-      h1 { font-size: 27px; }
+      .wrap { padding: 8px; }
+      h1 { font-size: 26px; }
       .intro { font-size: 14px; }
       .status-grid { grid-template-columns: 1fr; }
       .form-grid { grid-template-columns: 1fr; }
@@ -372,17 +382,21 @@
         font-size: 13px;
       }
       .sheet {
+        min-height: auto;
         padding: 8px;
       }
       .sheet::before {
-        top: 6px;
-        right: 6px;
-        bottom: 6px;
-        left: 6px;
+        top: 5px;
+        right: 5px;
+        bottom: 5px;
+        left: 5px;
       }
       .sheet::after {
         font-size: 54px;
         letter-spacing: 5px;
+      }
+      .ticket-half {
+        min-height: auto;
       }
     }
 
@@ -483,8 +497,6 @@
     </div>
 
     <div id="ticketArea">
-      <div class="preview-title">VORSCHAU IHRES TICKETS</div>
-
       <div class="sheet" id="ticketSheet">
         <div class="ticket-half">
           <div class="ticket-header">
@@ -513,7 +525,11 @@
               <div class="ticket-number" id="t1_number_box">WIRD BEI RESERVIERUNG VERGEBEN</div>
               <div class="free-line">EINTRITT FREI</div>
             </div>
-            <div class="qr-wrap"><img id="t1_qr" alt="QR Code" src="" /></div>
+            <div class="qr-wrap">
+              <a id="t1_qr_link" href="#" target="_blank" rel="noopener noreferrer">
+                <img id="t1_qr" alt="QR Code" src="" />
+              </a>
+            </div>
           </div>
 
           <div class="ticket-notes">
@@ -551,7 +567,11 @@
               <div class="ticket-number" id="t2_number_box">WIRD BEI RESERVIERUNG VERGEBEN</div>
               <div class="free-line">EINTRITT FREI</div>
             </div>
-            <div class="qr-wrap"><img id="t2_qr" alt="QR Code" src="" /></div>
+            <div class="qr-wrap">
+              <a id="t2_qr_link" href="#" target="_blank" rel="noopener noreferrer">
+                <img id="t2_qr" alt="QR Code" src="" />
+              </a>
+            </div>
           </div>
 
           <div class="ticket-notes">
@@ -599,22 +619,20 @@
       sendHeight();
     }
 
-    function qrUrl(text) {
-      return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(text);
+    function getTicketTargetUrl(data) {
+      var base = "https://www.altgrieth.de/veranstaltungen/heimat-lieder-abend";
+      var params = new URLSearchParams({
+        ticket: data.ticket_number || "",
+        vorname: data.first_name || "",
+        nachname: data.last_name || "",
+        personen: data.persons || "",
+        essen: data.food || ""
+      });
+      return base + "?" + params.toString();
     }
 
-    function buildQrText(data) {
-      return [
-        "Gasthaus Alt Grieth",
-        "Heimatlieder Abend",
-        "Ticketnummer: " + data.ticket_number,
-        "Name: " + data.first_name + " " + data.last_name,
-        "E-Mail: " + data.email,
-        "Telefon: " + data.phone,
-        "Personen: " + data.persons,
-        "Essen: " + data.food,
-        "Datum: 6. Juni 20:00 Uhr"
-      ].join(" | ");
+    function qrUrl(targetUrl) {
+      return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(targetUrl);
     }
 
     function getFormData() {
@@ -629,6 +647,8 @@
     }
 
     function fillHalf(prefix, data) {
+      var targetUrl = getTicketTargetUrl(data);
+
       document.getElementById(prefix + "_first_name").textContent = data.first_name || "—";
       document.getElementById(prefix + "_last_name").textContent = data.last_name || "—";
       document.getElementById(prefix + "_email").textContent = data.email || "—";
@@ -638,17 +658,8 @@
       document.getElementById(prefix + "_number").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
       document.getElementById(prefix + "_number_box").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
 
-      var qrText = buildQrText({
-        ticket_number: data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN",
-        first_name: data.first_name || "—",
-        last_name: data.last_name || "—",
-        email: data.email || "—",
-        phone: data.phone || "—",
-        persons: data.persons || "1",
-        food: data.food || "Nein"
-      });
-
-      document.getElementById(prefix + "_qr").src = qrUrl(qrText);
+      document.getElementById(prefix + "_qr").src = qrUrl(targetUrl);
+      document.getElementById(prefix + "_qr_link").href = targetUrl;
     }
 
     function fillTicket(data) {
@@ -749,22 +760,23 @@
       var ticket = document.getElementById("ticketSheet");
       var clone = ticket.cloneNode(true);
 
-      clone.style.width = "790px";
-      clone.style.maxWidth = "790px";
+      clone.style.width = "830px";
+      clone.style.maxWidth = "830px";
       clone.style.margin = "0";
       clone.style.boxShadow = "none";
+      clone.style.minHeight = "1160px";
 
       var wrapper = document.createElement("div");
       wrapper.style.position = "fixed";
       wrapper.style.left = "-99999px";
       wrapper.style.top = "0";
-      wrapper.style.width = "790px";
+      wrapper.style.width = "830px";
       wrapper.style.background = "#ffffff";
       wrapper.appendChild(clone);
       document.body.appendChild(wrapper);
 
       html2canvas(clone, {
-        scale: 2.5,
+        scale: 3,
         backgroundColor: "#ffffff",
         useCORS: true
       }).then(function(canvas) {
@@ -779,7 +791,7 @@
 
         var pageWidth = 210;
         var pageHeight = 297;
-        var margin = 3;
+        var margin = 1.5;
         var usableWidth = pageWidth - margin * 2;
         var usableHeight = pageHeight - margin * 2;
 
