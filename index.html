@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gasthaus Alt Grieth – Tickets</title>
+  <title>Reservierung – Gasthaus Alt Grieth</title>
   <meta name="robots" content="noindex" />
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -14,15 +14,15 @@
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       background: #fffdf8;
       color: #160520;
+      font-family: Arial, sans-serif;
     }
 
     .wrap {
       max-width: 860px;
       margin: 0 auto;
-      padding: 12px;
+      padding: 10px;
     }
 
     .page-topline {
@@ -163,7 +163,6 @@
       margin: 0 0 12px;
     }
 
-    /* A4 ticket sheet */
     .sheet {
       width: 100%;
       max-width: 794px;
@@ -173,7 +172,7 @@
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(rgba(255,251,242,0.955), rgba(255,251,242,0.955)),
+        linear-gradient(rgba(255,251,242,0.96), rgba(255,251,242,0.96)),
         url("https://i.postimg.cc/0yKq0kXr/rhein-soft.jpg");
       background-size: cover;
       background-position: center;
@@ -188,21 +187,6 @@
       bottom: 8px;
       left: 8px;
       border: 1px solid rgba(189,173,130,0.95);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .sheet::after {
-      content: "ALT GRIETH";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) rotate(-90deg);
-      font-size: 88px;
-      font-weight: 700;
-      letter-spacing: 8px;
-      color: rgba(189,173,130,0.055);
-      white-space: nowrap;
       pointer-events: none;
       z-index: 1;
     }
@@ -383,10 +367,6 @@
       .sheet {
         aspect-ratio: 210 / 297;
         padding: 8px;
-      }
-      .sheet::after {
-        font-size: 52px;
-        letter-spacing: 5px;
       }
       .ticket-half {
         height: calc((100% - 18px) / 2);
@@ -727,10 +707,9 @@
       var ticket = document.getElementById("ticketSheet");
       var clone = ticket.cloneNode(true);
 
-      clone.style.width = "1240px";
-      clone.style.maxWidth = "1240px";
-      clone.style.height = "1754px";
-      clone.style.minHeight = "1754px";
+      clone.style.width = "1123px";
+      clone.style.height = "1587px";
+      clone.style.maxWidth = "1123px";
       clone.style.margin = "0";
       clone.style.boxShadow = "none";
 
@@ -738,8 +717,8 @@
       wrapper.style.position = "fixed";
       wrapper.style.left = "-99999px";
       wrapper.style.top = "0";
-      wrapper.style.width = "1240px";
-      wrapper.style.height = "1754px";
+      wrapper.style.width = "1123px";
+      wrapper.style.height = "1587px";
       wrapper.style.background = "#ffffff";
       wrapper.appendChild(clone);
       document.body.appendChild(wrapper);
@@ -748,8 +727,8 @@
         scale: 2,
         backgroundColor: "#ffffff",
         useCORS: true,
-        width: 1240,
-        height: 1754
+        width: 1123,
+        height: 1587
       }).then(function(canvas) {
         document.body.removeChild(wrapper);
 
@@ -760,7 +739,7 @@
           format: "a4"
         });
 
-        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+        pdf.addImage(imgData, "JPEG", 10, 10, 190, 277);
 
         var fileName = "Heimatlieder-Abend-" + (latestTicketNumber || "Ticket") + ".pdf";
         pdf.save(fileName);
