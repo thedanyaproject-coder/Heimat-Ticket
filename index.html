@@ -20,7 +20,7 @@
     }
 
     .wrap {
-      max-width: 900px;
+      max-width: 920px;
       margin: 0 auto;
       padding: 14px;
     }
@@ -42,7 +42,7 @@
     }
 
     .intro {
-      max-width: 780px;
+      max-width: 800px;
       margin: 0 auto 18px;
       text-align: center;
       font-size: 16px;
@@ -53,7 +53,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
-      max-width: 780px;
+      max-width: 800px;
       margin: 0 auto 18px;
     }
 
@@ -84,7 +84,7 @@
     }
 
     .message {
-      max-width: 780px;
+      max-width: 800px;
       margin: 0 auto 14px;
       padding: 12px 14px;
       display: none;
@@ -96,7 +96,7 @@
     }
 
     .form-box {
-      max-width: 780px;
+      max-width: 800px;
       margin: 0 auto 22px;
       padding: 18px;
     }
@@ -168,7 +168,7 @@
       max-width: 794px;
       aspect-ratio: 210 / 297;
       margin: 0 auto 18px;
-      padding: 20px;
+      padding: 18px;
       position: relative;
       overflow: hidden;
       background:
@@ -198,7 +198,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: rgba(255,255,255,0.62);
+      background: rgba(255,255,255,0.64);
       padding: 12px 12px 10px;
     }
 
@@ -215,7 +215,7 @@
     }
 
     .ticket-title {
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -268,7 +268,7 @@
 
     .ticket-bottom {
       display: grid;
-      grid-template-columns: 1fr 116px;
+      grid-template-columns: 1fr 118px;
       gap: 12px;
       align-items: center;
       margin-top: 4px;
@@ -314,8 +314,8 @@
     }
 
     .qr-wrap img {
-      width: 102px;
-      height: 102px;
+      width: 104px;
+      height: 104px;
       border: 1px solid #bdad82;
       background: #fff;
       padding: 6px;
@@ -349,32 +349,59 @@
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 10px; }
-      h1 { font-size: 28px; }
-      .intro { font-size: 14px; }
-      .status-grid { grid-template-columns: 1fr; }
-      .form-grid { grid-template-columns: 1fr; }
-      .ticket-grid { grid-template-columns: 1fr; }
-      .ticket-bottom { grid-template-columns: 1fr; }
+      .wrap {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .intro {
+        font-size: 14px;
+      }
+
+      .status-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ticket-bottom {
+        grid-template-columns: 1fr;
+      }
+
       button {
         min-height: 40px;
         font-size: 13px;
       }
 
       .sheet {
-        aspect-ratio: auto;
-        min-height: 1750px;
+        aspect-ratio: 210 / 297;
         padding: 14px;
       }
 
       .ticket-half {
-        height: auto;
-        min-height: 820px;
-        padding: 12px 10px;
+        height: calc((100% - 22px) / 2);
+        padding: 10px 10px 8px;
       }
 
       .ticket-title {
-        font-size: 26px;
+        font-size: 24px;
+      }
+
+      .ticket-eventline {
+        font-size: 13px;
+      }
+
+      .field-box {
+        min-height: 52px;
       }
 
       .field-value {
@@ -388,6 +415,10 @@
       .qr-wrap img {
         width: 96px;
         height: 96px;
+      }
+
+      .ticket-notes {
+        font-size: 11px;
       }
     }
   </style>
