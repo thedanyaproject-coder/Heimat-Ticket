@@ -1,147 +1,243 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Heimatlieder Abend – Reservierung</title>
-  <style>
-    :root{
-      --bg:#f8f4ea;
-      --paper:#fffdf8;
-      --text:#160520;
-      --gold:#bdad82;
-      --line:#e5d7b5;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sitzplatz und Tisch Reservierung</title>
 
-    *{box-sizing:border-box;}
+<style>
+:root{
+  --bg:#f7f2e8;
+  --paper:#fffdf8;
+  --text:#160520;
+  --gold:#bdad82;
+}
 
-    body{
-      margin:0;
-      font-family:Actor, Arial, sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
+*{box-sizing:border-box;}
 
-    .wrap{
-      max-width:960px;
-      margin:0 auto;
-      padding:24px 16px 40px;
-    }
+body{
+  margin:0;
+  font-family:Actor, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
 
-    .card{
-      background:var(--paper);
-      border:2px solid var(--gold);
-      padding:24px 20px;
-      margin-bottom:22px;
-    }
+.wrap{
+  max-width:1000px;
+  margin:0 auto;
+  padding:30px 16px 40px;
+}
 
-    h1{
-      margin:0 0 8px;
-      text-align:center;
-      font-size:34px;
-      line-height:1.1;
-      text-transform:uppercase;
-      letter-spacing:1px;
-    }
+.card{
+  background:var(--paper);
+  border:2px solid var(--gold);
+  padding:26px 22px;
+  margin-bottom:22px;
+}
 
-    .sub{
-      margin:0;
-      text-align:center;
-      font-size:18px;
-      font-weight:700;
-    }
+h1{
+  margin:0 0 10px;
+  text-align:center;
+  font-size:34px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
 
-    .statusbox{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      gap:12px;
-      flex-wrap:wrap;
-      text-align:center;
-      font-size:18px;
-    }
+.sub{
+  text-align:center;
+  font-size:18px;
+  font-weight:700;
+  margin-bottom:10px;
+}
 
-    .badge{
-      display:inline-block;
-      padding:10px 14px;
-      border:2px solid var(--gold);
-      background:#fff;
-      font-weight:700;
-      min-width:110px;
-    }
+.intro{
+  text-align:center;
+  font-size:16px;
+  line-height:1.6;
+  max-width:750px;
+  margin:0 auto;
+}
 
-    .info{
-      text-align:center;
-      line-height:1.7;
-      font-size:16px;
-    }
+.form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
 
-    .frame-wrap{
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:#fff;
-    }
+.full{grid-column:1/-1;}
 
-    iframe{
-      width:100%;
-      height:1180px;
-      border:0;
-      display:block;
-      background:#fff;
-    }
+label{
+  font-size:13px;
+  font-weight:700;
+  display:block;
+  margin-bottom:6px;
+}
 
-    @media (max-width:768px){
-      .wrap{padding:16px 12px 26px;}
-      h1{font-size:26px;}
-      .sub{font-size:16px;}
-      .statusbox{font-size:16px;}
-      iframe{height:1320px;}
-    }
-  </style>
+input, select, textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--gold);
+  font-size:15px;
+  font-family:Actor, Arial;
+  background:#fff;
+}
+
+textarea{
+  min-height:100px;
+}
+
+.preview{
+  border:2px dashed var(--gold);
+  padding:20px;
+  text-align:center;
+  background:#fff;
+}
+
+.preview-title{
+  font-size:22px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.preview-date{
+  margin:8px 0;
+  font-size:18px;
+  font-weight:700;
+}
+
+.preview-line{
+  font-size:16px;
+}
+
+button{
+  background:var(--text);
+  color:#fff;
+  border:2px solid var(--text);
+  padding:14px 20px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.actions{
+  text-align:center;
+  margin-top:20px;
+}
+
+.success{
+  display:none;
+  margin-top:20px;
+  border:1px solid var(--gold);
+  padding:14px;
+  text-align:center;
+}
+
+@media(max-width:768px){
+  .form{grid-template-columns:1fr;}
+  h1{font-size:26px;}
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <section class="card">
-      <h1>HEIMATLIEDER ABEND</h1>
-      <p class="sub">Freitag, 6. Juni · Beginn 20:00 Uhr</p>
-    </section>
 
-    <section class="card">
-      <div class="statusbox">
-        <span>Aktuell verfügbar:</span>
-        <span class="badge" id="seats">...</span>
-      </div>
-    </section>
+<div class="wrap">
 
-    <section class="card">
-      <div class="info">
-        Bitte wählen Sie unten Ihre Plätze aus und folgen Sie den weiteren Schritten.
-      </div>
-    </section>
+<div class="card">
+  <h1>SITZPLATZ UND TISCH RESERVIERUNG</h1>
+  <div class="sub">Heimatlieder Abend · 6. Juni · 20:00 Uhr</div>
+</div>
 
-    <section class="card frame-wrap">
-      <iframe src="/app.html" title="Reservierungssystem"></iframe>
-    </section>
+<div class="card">
+  <div class="intro">
+    Reservieren Sie hier Ihren Platz für einen gemütlichen Abend mit Heimatliedern im Gasthaus Alt Grieth.
+  </div>
+</div>
+
+<div class="card">
+  <div class="form">
+
+    <div>
+      <label>Name</label>
+      <input id="name" type="text">
+    </div>
+
+    <div>
+      <label>E-Mail</label>
+      <input id="email" type="email">
+    </div>
+
+    <div>
+      <label>Art</label>
+      <select id="type">
+        <option>Sitzplatz</option>
+        <option>Tisch</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Anzahl</label>
+      <select id="count">
+        <option>1</option><option>2</option><option>3</option>
+        <option>4</option><option>5</option><option>6</option>
+      </select>
+    </div>
+
+    <div class="full">
+      <label>Wunsch / Hinweis</label>
+      <textarea id="msg"></textarea>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+
+  <div class="preview">
+    <div class="preview-title">Heimatlieder Abend</div>
+    <div class="preview-date">6. Juni · 20:00 Uhr</div>
+    <div class="preview-line" id="p_name">Name: —</div>
+    <div class="preview-line" id="p_type">Art: Sitzplatz</div>
+    <div class="preview-line" id="p_count">Anzahl: 1</div>
   </div>
 
-  <script>
-    async function loadStatus(){
-      try{
-        const res = await fetch('/api/status', {cache:'no-store'});
-        const data = await res.json();
-        const seats = document.getElementById('seats');
-        if(typeof data.available !== 'undefined'){
-          seats.textContent = data.available + ' Plätze';
-        }else if(typeof data.remaining !== 'undefined'){
-          seats.textContent = data.remaining + ' Plätze';
-        }else{
-          seats.textContent = 'Verfügbar';
-        }
-      }catch(e){
-        document.getElementById('seats').textContent = 'Bitte später erneut prüfen';
-      }
-    }
-    loadStatus();
-  </script>
+  <div class="actions">
+    <button onclick="reserve()">Reservierung bestätigen</button>
+  </div>
+
+  <div class="success" id="success">
+    Reservierung gespeichert.<br>
+    Bitte Screenshot machen oder manuell bestätigen.
+  </div>
+
+</div>
+
+</div>
+
+<script>
+const nameEl = document.getElementById("name");
+const typeEl = document.getElementById("type");
+const countEl = document.getElementById("count");
+
+function update(){
+  document.getElementById("p_name").innerText = "Name: " + (nameEl.value || "—");
+  document.getElementById("p_type").innerText = "Art: " + typeEl.value;
+  document.getElementById("p_count").innerText = "Anzahl: " + countEl.value;
+}
+
+nameEl.oninput = update;
+typeEl.onchange = update;
+countEl.onchange = update;
+
+function reserve(){
+  if(!nameEl.value || !document.getElementById("email").value){
+    alert("Bitte Name und E-Mail eingeben");
+    return;
+  }
+  document.getElementById("success").style.display="block";
+}
+
+update();
+</script>
+
 </body>
 </html>
