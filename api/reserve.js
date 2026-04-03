@@ -8,7 +8,7 @@ module.exports = async function (req, res) {
     const food = req.query.food || "Nein";
 
     const url =
-      "https://script.google.com/macros/s/AKfycbyeOWVIWMy01uRy_DGpXPMnZFrj-aBDI8EaALigv9_zZYtVbxOpTU6CO2C1hEQmKtmg8w/exec" +
+      "https://script.google.com/macros/s/AKfycbzacbdB_CkW9qqq5-ABFB_5g8vatoJLsoN9MkgYCyFD--YYkxQGFSkuoZz_GZ8eyKQnZw/exec" +
       "?action=reserve" +
       "&first_name=" + encodeURIComponent(first_name) +
       "&last_name=" + encodeURIComponent(last_name) +
