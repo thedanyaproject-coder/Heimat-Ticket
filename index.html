@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reservierung – Gasthaus Alt Grieth</title>
+  <title>Gasthaus Alt Grieth – Tickets</title>
   <meta name="robots" content="noindex" />
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -14,47 +14,47 @@
 
     body {
       margin: 0;
+      font-family: Arial, sans-serif;
       background: #fffdf8;
       color: #160520;
-      font-family: Arial, sans-serif;
     }
 
     .wrap {
-      max-width: 860px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 10px;
+      padding: 14px;
     }
 
     .page-topline {
       text-align: center;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 4px;
       color: #6a5a36;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     h1 {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       text-align: center;
-      font-size: 30px;
+      font-size: 34px;
       line-height: 1.15;
       letter-spacing: 2px;
     }
 
     .intro {
-      max-width: 760px;
-      margin: 0 auto 16px;
+      max-width: 780px;
+      margin: 0 auto 18px;
       text-align: center;
-      font-size: 15px;
-      line-height: 1.6;
+      font-size: 16px;
+      line-height: 1.65;
     }
 
     .status-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      max-width: 760px;
-      margin: 0 auto 16px;
+      gap: 14px;
+      max-width: 780px;
+      margin: 0 auto 18px;
     }
 
     .status-box,
@@ -65,46 +65,46 @@
     }
 
     .status-box {
-      padding: 14px;
+      padding: 16px;
       text-align: center;
     }
 
     .status-label {
       display: block;
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #6a5a36;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .status-value {
-      font-size: 28px;
+      font-size: 34px;
       font-weight: 700;
     }
 
     .message {
-      max-width: 760px;
+      max-width: 780px;
       margin: 0 auto 14px;
       padding: 12px 14px;
       display: none;
       text-align: center;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.5;
       border: 1px solid #bdad82;
       background: #fff;
     }
 
     .form-box {
-      max-width: 760px;
-      margin: 0 auto 20px;
-      padding: 16px;
+      max-width: 780px;
+      margin: 0 auto 22px;
+      padding: 18px;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px 14px;
+      gap: 14px 16px;
     }
 
     label {
@@ -117,9 +117,9 @@
     input,
     select {
       width: 100%;
-      min-height: 42px;
-      padding: 9px 11px;
-      font-size: 15px;
+      min-height: 44px;
+      padding: 10px 12px;
+      font-size: 16px;
       border: 1px solid #bdad82;
       background: #fff;
       color: #160520;
@@ -129,13 +129,13 @@
     .btn-row {
       display: flex;
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     button {
       flex: 1 1 0;
-      min-height: 40px;
-      padding: 8px 12px;
+      min-height: 42px;
+      padding: 9px 12px;
       font-size: 14px;
       border: none;
       cursor: pointer;
@@ -158,7 +158,7 @@
 
     .preview-title {
       text-align: center;
-      font-size: 18px;
+      font-size: 20px;
       letter-spacing: 2px;
       margin: 0 0 12px;
     }
@@ -168,7 +168,7 @@
       max-width: 794px;
       aspect-ratio: 210 / 297;
       margin: 0 auto 18px;
-      padding: 12px;
+      padding: 20px;
       position: relative;
       overflow: hidden;
       background:
@@ -182,10 +182,10 @@
     .sheet::before {
       content: "";
       position: absolute;
-      top: 8px;
-      right: 8px;
-      bottom: 8px;
-      left: 8px;
+      top: 10px;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
       border: 1px solid rgba(189,173,130,0.95);
       pointer-events: none;
       z-index: 1;
@@ -194,116 +194,112 @@
     .ticket-half {
       position: relative;
       z-index: 2;
-      height: calc((100% - 22px) / 2);
+      height: calc((100% - 28px) / 2);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      background: rgba(255,255,255,0.58);
-      padding: 8px 8px 6px;
+      background: rgba(255,255,255,0.62);
+      padding: 12px 12px 10px;
     }
 
     .ticket-header {
       text-align: center;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .ticket-house {
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 4px;
       color: #6a5a36;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .ticket-title {
-      font-size: 26px;
+      font-size: 32px;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       line-height: 1.1;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .ticket-eventline {
-      font-size: 13px;
-      letter-spacing: 1.4px;
+      font-size: 15px;
+      letter-spacing: 1.5px;
     }
 
     .divider {
-      width: 110px;
+      width: 120px;
       height: 1px;
       background: #bdad82;
-      margin: 8px auto 10px;
+      margin: 10px auto 12px;
     }
 
     .ticket-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px 10px;
-      margin-bottom: 8px;
+      gap: 10px 12px;
+      margin-bottom: 10px;
     }
 
     .field-box {
       border: 1px solid #bdad82;
-      padding: 7px 8px;
-      background: rgba(255,255,255,0.9);
-      min-height: 48px;
-    }
-
-    .field-box.full {
-      grid-column: 1 / -1;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.92);
+      min-height: 58px;
     }
 
     .field-label {
       display: block;
-      font-size: 9px;
+      font-size: 10px;
       letter-spacing: 2px;
       color: #6a5a36;
       text-transform: uppercase;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .field-value {
       display: block;
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       word-break: break-word;
-      min-height: 15px;
+      min-height: 18px;
     }
 
     .ticket-bottom {
       display: grid;
-      grid-template-columns: 1fr 102px;
-      gap: 10px;
+      grid-template-columns: 1fr 116px;
+      gap: 12px;
       align-items: center;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .ticket-number-box {
       border: 2px solid #bdad82;
-      padding: 9px;
+      padding: 12px;
       text-align: center;
-      background: rgba(255,255,255,0.92);
+      background: rgba(255,255,255,0.94);
     }
 
     .ticket-number-label {
-      font-size: 9px;
+      font-size: 10px;
       letter-spacing: 2px;
       text-transform: uppercase;
       color: #6a5a36;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
     }
 
     .ticket-number {
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: 2px;
       word-break: break-word;
-      min-height: 20px;
+      min-height: 24px;
     }
 
     .free-line {
-      margin-top: 6px;
-      font-size: 11px;
+      margin-top: 8px;
+      font-size: 12px;
       font-weight: 700;
       letter-spacing: 2px;
     }
@@ -318,26 +314,26 @@
     }
 
     .qr-wrap img {
-      width: 92px;
-      height: 92px;
+      width: 102px;
+      height: 102px;
       border: 1px solid #bdad82;
       background: #fff;
-      padding: 5px;
+      padding: 6px;
     }
 
     .ticket-notes {
-      margin-top: 8px;
+      margin-top: 10px;
       text-align: center;
-      font-size: 11px;
-      line-height: 1.35;
+      font-size: 12px;
+      line-height: 1.45;
     }
 
     .cut-line {
       position: relative;
-      margin: 8px 0;
+      margin: 10px 0;
       border-top: 2px dashed #bdad82;
       z-index: 2;
-      height: 6px;
+      height: 8px;
     }
 
     .cut-line span {
@@ -353,24 +349,32 @@
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 8px; }
-      h1 { font-size: 26px; }
+      .wrap { padding: 10px; }
+      h1 { font-size: 28px; }
       .intro { font-size: 14px; }
       .status-grid { grid-template-columns: 1fr; }
       .form-grid { grid-template-columns: 1fr; }
       .ticket-grid { grid-template-columns: 1fr; }
       .ticket-bottom { grid-template-columns: 1fr; }
       button {
-        min-height: 38px;
+        min-height: 40px;
         font-size: 13px;
       }
       .sheet {
-        aspect-ratio: 210 / 297;
-        padding: 8px;
+        padding: 12px;
       }
       .ticket-half {
-        height: calc((100% - 18px) / 2);
-        padding: 6px;
+        height: calc((100% - 24px) / 2);
+        padding: 10px;
+      }
+      .ticket-title {
+        font-size: 26px;
+      }
+      .field-value {
+        font-size: 15px;
+      }
+      .ticket-number {
+        font-size: 18px;
       }
     }
   </style>
@@ -464,14 +468,13 @@
               <div class="field-box"><span class="field-label">Essen</span><span class="field-value" id="t1_food">Nein</span></div>
               <div class="field-box"><span class="field-label">Datum</span><span class="field-value">6. Juni</span></div>
               <div class="field-box"><span class="field-label">Uhrzeit</span><span class="field-value">20:00 Uhr</span></div>
-              <div class="field-box full"><span class="field-label">Ticketnummer</span><span class="field-value" id="t1_number">WIRD BEI RESERVIERUNG VERGEBEN</span></div>
             </div>
           </div>
 
           <div>
             <div class="ticket-bottom">
               <div class="ticket-number-box">
-                <div class="ticket-number-label">Reservierung</div>
+                <div class="ticket-number-label">Ticketnummer</div>
                 <div class="ticket-number" id="t1_number_box">WIRD BEI RESERVIERUNG VERGEBEN</div>
                 <div class="free-line">EINTRITT FREI</div>
               </div>
@@ -510,14 +513,13 @@
               <div class="field-box"><span class="field-label">Essen</span><span class="field-value" id="t2_food">Nein</span></div>
               <div class="field-box"><span class="field-label">Datum</span><span class="field-value">6. Juni</span></div>
               <div class="field-box"><span class="field-label">Uhrzeit</span><span class="field-value">20:00 Uhr</span></div>
-              <div class="field-box full"><span class="field-label">Ticketnummer</span><span class="field-value" id="t2_number">WIRD BEI RESERVIERUNG VERGEBEN</span></div>
             </div>
           </div>
 
           <div>
             <div class="ticket-bottom">
               <div class="ticket-number-box">
-                <div class="ticket-number-label">Reservierung</div>
+                <div class="ticket-number-label">Ticketnummer</div>
                 <div class="ticket-number" id="t2_number_box">WIRD BEI RESERVIERUNG VERGEBEN</div>
                 <div class="free-line">EINTRITT FREI</div>
               </div>
@@ -602,7 +604,6 @@
       document.getElementById(prefix + "_phone").textContent = data.phone || "—";
       document.getElementById(prefix + "_persons").textContent = data.persons || "1";
       document.getElementById(prefix + "_food").textContent = data.food || "Nein";
-      document.getElementById(prefix + "_number").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
       document.getElementById(prefix + "_number_box").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
 
       document.getElementById(prefix + "_qr").src = qrUrl(targetUrl);
@@ -704,36 +705,16 @@
     function downloadPdf() {
       updatePreview();
 
-      var ticket = document.getElementById("ticketSheet");
-      var clone = ticket.cloneNode(true);
+      const element = document.getElementById("ticketSheet");
 
-      clone.style.width = "1123px";
-      clone.style.height = "1587px";
-      clone.style.maxWidth = "1123px";
-      clone.style.margin = "0";
-      clone.style.boxShadow = "none";
-
-      var wrapper = document.createElement("div");
-      wrapper.style.position = "fixed";
-      wrapper.style.left = "-99999px";
-      wrapper.style.top = "0";
-      wrapper.style.width = "1123px";
-      wrapper.style.height = "1587px";
-      wrapper.style.background = "#ffffff";
-      wrapper.appendChild(clone);
-      document.body.appendChild(wrapper);
-
-      html2canvas(clone, {
-        scale: 2,
+      html2canvas(element, {
+        scale: 3,
         backgroundColor: "#ffffff",
-        useCORS: true,
-        width: 1123,
-        height: 1587
-      }).then(function(canvas) {
-        document.body.removeChild(wrapper);
+        useCORS: true
+      }).then(canvas => {
+        const imgData = canvas.toDataURL("image/jpeg", 1.0);
 
-        var imgData = canvas.toDataURL("image/jpeg", 1.0);
-        var pdf = new window.jspdf.jsPDF({
+        const pdf = new window.jspdf.jsPDF({
           orientation: "p",
           unit: "mm",
           format: "a4"
@@ -741,7 +722,7 @@
 
         pdf.addImage(imgData, "JPEG", 10, 10, 190, 277);
 
-        var fileName = "Heimatlieder-Abend-" + (latestTicketNumber || "Ticket") + ".pdf";
+        const fileName = "Heimatlieder-Abend-" + (latestTicketNumber || "Ticket") + ".pdf";
         pdf.save(fileName);
       });
     }
