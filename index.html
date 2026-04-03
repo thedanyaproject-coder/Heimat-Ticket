@@ -20,9 +20,9 @@
     }
 
     .wrap {
-      max-width: 1040px;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 24px;
+      padding: 18px;
     }
 
     .ticket-topline {
@@ -37,35 +37,35 @@
       margin: 0 0 14px;
       text-align: center;
       letter-spacing: 2px;
-      font-size: 34px;
+      font-size: 32px;
       line-height: 1.2;
     }
 
     .intro {
-      max-width: 880px;
-      margin: 0 auto 24px;
+      max-width: 760px;
+      margin: 0 auto 20px;
       text-align: center;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.7;
     }
 
     .status-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      max-width: 880px;
-      margin: 0 auto 24px;
+      gap: 14px;
+      max-width: 760px;
+      margin: 0 auto 20px;
     }
 
     .status-box,
     .form-box,
-    .ticket {
+    .ticket-sheet {
       background: #fff;
       border: 2px solid #bdad82;
     }
 
     .status-box {
-      padding: 18px;
+      padding: 16px;
       text-align: center;
     }
 
@@ -79,47 +79,47 @@
     }
 
     .status-value {
-      font-size: 34px;
+      font-size: 30px;
       font-weight: 700;
     }
 
     .message {
-      max-width: 880px;
-      margin: 0 auto 18px;
-      padding: 14px 16px;
+      max-width: 760px;
+      margin: 0 auto 16px;
+      padding: 12px 14px;
       display: none;
       text-align: center;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.5;
       border: 1px solid #bdad82;
       background: #fff;
     }
 
     .form-box {
-      max-width: 880px;
-      margin: 0 auto 30px;
-      padding: 24px;
+      max-width: 760px;
+      margin: 0 auto 24px;
+      padding: 18px;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px 18px;
+      gap: 12px 16px;
     }
 
     label {
       display: block;
       margin: 0 0 6px;
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     input,
     select {
       width: 100%;
-      min-height: 46px;
-      padding: 10px 12px;
-      font-size: 16px;
+      min-height: 42px;
+      padding: 9px 11px;
+      font-size: 15px;
       color: #160520;
       border: 1px solid #bdad82;
       background: #fff;
@@ -128,16 +128,15 @@
 
     .btn-row {
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 20px;
+      gap: 10px;
+      margin-top: 16px;
     }
 
     button {
-      flex: 1 1 260px;
-      min-height: 44px;
-      padding: 10px 16px;
-      font-size: 15px;
+      flex: 1 1 0;
+      min-height: 40px;
+      padding: 8px 12px;
+      font-size: 14px;
       border: none;
       cursor: pointer;
       border-radius: 0;
@@ -160,73 +159,82 @@
 
     .preview-title {
       text-align: center;
-      font-size: 22px;
+      font-size: 20px;
       letter-spacing: 2px;
-      margin: 8px 0 18px;
+      margin: 8px 0 16px;
     }
 
-    .ticket {
-      display: block;
+    /* A4 portrait sheet */
+    .ticket-sheet {
       width: 100%;
-      max-width: 880px;
-      margin: 0 auto 30px;
-      padding: 36px 34px 30px;
+      max-width: 760px;
+      margin: 0 auto 20px;
+      padding: 18px;
       position: relative;
       background:
         linear-gradient(rgba(255,251,242,0.97), rgba(255,251,242,0.97)),
         repeating-linear-gradient(
           0deg,
-          rgba(189,173,130,0.05),
-          rgba(189,173,130,0.05) 2px,
+          rgba(189,173,130,0.04),
+          rgba(189,173,130,0.04) 2px,
           transparent 2px,
           transparent 8px
         );
       box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      border: 3px solid #bdad82;
       overflow: hidden;
     }
 
-    .ticket::before {
+    .ticket-sheet::before {
       content: "";
       position: absolute;
-      top: 12px;
-      right: 12px;
-      bottom: 12px;
-      left: 12px;
+      top: 10px;
+      right: 10px;
+      bottom: 10px;
+      left: 10px;
       border: 1px solid rgba(189,173,130,0.9);
       pointer-events: none;
     }
 
-    .ticket::after {
+    .ticket-sheet::after {
       content: "";
       position: absolute;
       inset: 0;
       background-image: radial-gradient(circle at center, rgba(255,255,255,0.18) 0, rgba(255,255,255,0.18) 2px, transparent 2px);
       background-size: 32px 32px;
-      opacity: 0.22;
+      opacity: 0.18;
       pointer-events: none;
     }
 
-    .ticket-inner {
+    .ticket-main,
+    .ticket-duplicate {
       position: relative;
       z-index: 2;
     }
 
-    .ticket-title {
+    .ticket-header {
       text-align: center;
-      font-size: 42px;
-      line-height: 1.1;
+      padding: 4px 0 8px;
+    }
+
+    .ticket-header .house {
+      font-size: 13px;
       letter-spacing: 4px;
+      color: #6a5a36;
+      margin-bottom: 10px;
+    }
+
+    .ticket-header .title {
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: 3px;
       font-weight: 700;
       text-transform: uppercase;
       margin-bottom: 10px;
     }
 
-    .ticket-eventline {
-      text-align: center;
-      font-size: 18px;
+    .ticket-header .eventline {
+      font-size: 16px;
       letter-spacing: 2px;
-      margin-bottom: 24px;
       line-height: 1.5;
     }
 
@@ -234,23 +242,29 @@
       width: 120px;
       height: 1px;
       background: #bdad82;
-      margin: 0 auto 24px;
+      margin: 16px auto 18px;
     }
 
     .ticket-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px 28px;
-      margin-bottom: 24px;
+      gap: 10px 14px;
+      margin-bottom: 16px;
     }
 
-    .field.full {
+    .field-box {
+      border: 1px solid #bdad82;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.75);
+    }
+
+    .field-box.full {
       grid-column: 1 / -1;
     }
 
     .field-label {
       display: block;
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 2px;
       margin-bottom: 4px;
       color: #6a5a36;
@@ -259,90 +273,162 @@
 
     .field-value {
       display: block;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       word-break: break-word;
-      min-height: 24px;
+      min-height: 20px;
+    }
+
+    .ticket-bottom {
+      display: grid;
+      grid-template-columns: 1fr 170px;
+      gap: 14px;
+      align-items: center;
+      margin-top: 8px;
     }
 
     .ticket-number-box {
-      margin-top: 10px;
-      padding: 18px 18px 16px;
       border: 2px solid #bdad82;
+      padding: 14px;
       text-align: center;
-      background: rgba(255,255,255,0.68);
+      background: rgba(255,255,255,0.7);
     }
 
     .ticket-number-label {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       color: #6a5a36;
     }
 
     .ticket-number {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       letter-spacing: 2px;
       word-break: break-word;
-      min-height: 30px;
+      min-height: 28px;
+    }
+
+    .ticket-notes {
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-top: 14px;
+    }
+
+    .free-line {
+      margin-top: 10px;
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 2px;
+      font-weight: 700;
     }
 
     .qr-wrap {
       text-align: center;
-      margin-top: 20px;
     }
 
     .qr-wrap img {
-      width: 150px;
-      height: 150px;
+      width: 130px;
+      height: 130px;
       background: #fff;
       border: 1px solid #bdad82;
       padding: 8px;
       display: inline-block;
     }
 
-    .free-line {
-      margin-top: 14px;
-      text-align: center;
-      font-size: 15px;
-      letter-spacing: 2px;
-      font-weight: 700;
+    .cut-line {
+      position: relative;
+      margin: 18px 0 12px;
+      border-top: 2px dashed #bdad82;
     }
 
-    .footer-note {
-      margin-top: 20px;
+    .cut-line span {
+      position: absolute;
+      left: 50%;
+      top: -13px;
+      transform: translateX(-50%);
+      background: #fffdf8;
+      padding: 0 10px;
+      color: #6a5a36;
+      font-size: 16px;
+    }
+
+    .ticket-duplicate {
+      padding-top: 2px;
+    }
+
+    .duplicate-title {
       text-align: center;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: #6a5a36;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .duplicate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 12px;
+    }
+
+    .duplicate-box {
+      border: 1px solid #bdad82;
+      padding: 7px 9px;
+      background: rgba(255,255,255,0.75);
+    }
+
+    .duplicate-box.full {
+      grid-column: 1 / -1;
+    }
+
+    .duplicate-label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 3px;
+      color: #6a5a36;
+      text-transform: uppercase;
+    }
+
+    .duplicate-value {
+      display: block;
       font-size: 14px;
-      line-height: 1.7;
+      font-weight: 700;
+      word-break: break-word;
+      min-height: 16px;
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 14px; }
+      .wrap { padding: 12px; }
       h1 { font-size: 28px; }
-      .intro { font-size: 15px; margin-bottom: 20px; }
-      .status-grid { grid-template-columns: 1fr; gap: 12px; }
-      .status-value { font-size: 30px; }
-      .form-box { padding: 16px; }
+      .intro { font-size: 14px; margin-bottom: 18px; }
+      .status-grid { grid-template-columns: 1fr; gap: 10px; }
+      .status-value { font-size: 28px; }
+      .form-box { padding: 14px; }
       .form-grid { grid-template-columns: 1fr; }
-      .btn-row { gap: 10px; }
+      .btn-row { gap: 8px; }
       button {
-        flex: 1 1 calc(50% - 5px);
-        min-width: 0;
-        min-height: 40px;
-        font-size: 14px;
+        min-height: 38px;
+        font-size: 13px;
         padding: 8px 10px;
       }
       .preview-title { font-size: 18px; }
-      .ticket { padding: 22px 16px 20px; border-width: 2px; }
-      .ticket::before { top: 8px; right: 8px; bottom: 8px; left: 8px; }
-      .ticket-title { font-size: 28px; letter-spacing: 2px; }
-      .ticket-eventline { font-size: 15px; letter-spacing: 1px; }
-      .ticket-grid { grid-template-columns: 1fr; gap: 12px; }
-      .field-value { font-size: 17px; }
-      .ticket-number { font-size: 20px; }
-      .qr-wrap img { width: 130px; height: 130px; }
+      .ticket-sheet { padding: 14px; }
+      .ticket-header .title { font-size: 28px; letter-spacing: 2px; }
+      .ticket-header .eventline { font-size: 14px; letter-spacing: 1px; }
+      .ticket-grid,
+      .duplicate-grid {
+        grid-template-columns: 1fr;
+      }
+      .ticket-bottom {
+        grid-template-columns: 1fr;
+      }
+      .field-value { font-size: 16px; }
+      .ticket-number { font-size: 19px; }
+      .qr-wrap img { width: 115px; height: 115px; }
     }
   </style>
 </head>
@@ -415,79 +501,129 @@
     <div id="ticketArea">
       <div class="preview-title">VORSCHAU IHRES TICKETS</div>
 
-      <div class="ticket">
-        <div class="ticket-inner">
-          <div class="ticket-topline">GASTHAUS ALT GRIETH</div>
-          <div class="ticket-title">HEIMATLIEDER ABEND</div>
-          <div class="ticket-eventline">SAMSTAG · 6. JUNI · 20:00 UHR</div>
+      <div class="ticket-sheet" id="ticketSheet">
+        <div class="ticket-main">
+          <div class="ticket-header">
+            <div class="house">GASTHAUS ALT GRIETH</div>
+            <div class="title">HEIMATLIEDER ABEND</div>
+            <div class="eventline">SAMSTAG · 6. JUNI · 20:00 UHR</div>
+          </div>
+
           <div class="divider"></div>
 
           <div class="ticket-grid">
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Vorname</span>
               <span class="field-value" id="t_first_name">—</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Nachname</span>
               <span class="field-value" id="t_last_name">—</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">E-Mail</span>
               <span class="field-value" id="t_email">—</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Telefon</span>
               <span class="field-value" id="t_phone">—</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Anzahl Personen</span>
               <span class="field-value" id="t_persons">1</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Essen</span>
               <span class="field-value" id="t_food">Nein</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Datum</span>
               <span class="field-value">6. Juni</span>
             </div>
 
-            <div class="field">
+            <div class="field-box">
               <span class="field-label">Uhrzeit</span>
               <span class="field-value">20:00 Uhr</span>
             </div>
 
-            <div class="field full">
+            <div class="field-box full">
               <span class="field-label">Ticketnummer</span>
               <span class="field-value" id="t_number_inline">WIRD BEI RESERVIERUNG VERGEBEN</span>
             </div>
           </div>
 
-          <div class="ticket-number-box">
-            <div class="ticket-number-label">Ticketnummer</div>
-            <div class="ticket-number" id="t_number">WIRD BEI RESERVIERUNG VERGEBEN</div>
+          <div class="ticket-bottom">
+            <div class="ticket-number-box">
+              <div class="ticket-number-label">Ticketnummer</div>
+              <div class="ticket-number" id="t_number">WIRD BEI RESERVIERUNG VERGEBEN</div>
+              <div class="free-line">EINTRITT FREI</div>
+            </div>
+
+            <div class="qr-wrap">
+              <img id="t_qr" alt="QR Code" src="" />
+            </div>
           </div>
 
-          <div class="qr-wrap">
-            <img id="t_qr" alt="QR Code" src="" />
-          </div>
-
-          <div class="free-line">EINTRITT FREI</div>
-
-          <div class="footer-note">
+          <div class="ticket-notes">
             Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
             Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+          </div>
+        </div>
+
+        <div class="cut-line"><span>✂</span></div>
+
+        <div class="ticket-duplicate">
+          <div class="duplicate-title">Kontrollabschnitt / Duplikat</div>
+
+          <div class="duplicate-grid">
+            <div class="duplicate-box">
+              <span class="duplicate-label">Vorname</span>
+              <span class="duplicate-value" id="d_first_name">—</span>
+            </div>
+
+            <div class="duplicate-box">
+              <span class="duplicate-label">Nachname</span>
+              <span class="duplicate-value" id="d_last_name">—</span>
+            </div>
+
+            <div class="duplicate-box">
+              <span class="duplicate-label">E-Mail</span>
+              <span class="duplicate-value" id="d_email">—</span>
+            </div>
+
+            <div class="duplicate-box">
+              <span class="duplicate-label">Telefon</span>
+              <span class="duplicate-value" id="d_phone">—</span>
+            </div>
+
+            <div class="duplicate-box">
+              <span class="duplicate-label">Anzahl Personen</span>
+              <span class="duplicate-value" id="d_persons">1</span>
+            </div>
+
+            <div class="duplicate-box">
+              <span class="duplicate-label">Essen</span>
+              <span class="duplicate-value" id="d_food">Nein</span>
+            </div>
+
+            <div class="duplicate-box full">
+              <span class="duplicate-label">Ticketnummer</span>
+              <span class="duplicate-value" id="d_number">WIRD BEI RESERVIERUNG VERGEBEN</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
   <script>
     var latestTicketNumber = "";
@@ -555,23 +691,39 @@
     }
 
     function fillTicket(data) {
-      document.getElementById("t_first_name").textContent = data.first_name || "—";
-      document.getElementById("t_last_name").textContent = data.last_name || "—";
-      document.getElementById("t_email").textContent = data.email || "—";
-      document.getElementById("t_phone").textContent = data.phone || "—";
-      document.getElementById("t_persons").textContent = data.persons || "1";
-      document.getElementById("t_food").textContent = data.food || "Nein";
-      document.getElementById("t_number").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
-      document.getElementById("t_number_inline").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
+      var firstName = data.first_name || "—";
+      var lastName = data.last_name || "—";
+      var email = data.email || "—";
+      var phone = data.phone || "—";
+      var persons = data.persons || "1";
+      var food = data.food || "Nein";
+      var ticketNumber = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
+
+      document.getElementById("t_first_name").textContent = firstName;
+      document.getElementById("t_last_name").textContent = lastName;
+      document.getElementById("t_email").textContent = email;
+      document.getElementById("t_phone").textContent = phone;
+      document.getElementById("t_persons").textContent = persons;
+      document.getElementById("t_food").textContent = food;
+      document.getElementById("t_number").textContent = ticketNumber;
+      document.getElementById("t_number_inline").textContent = ticketNumber;
+
+      document.getElementById("d_first_name").textContent = firstName;
+      document.getElementById("d_last_name").textContent = lastName;
+      document.getElementById("d_email").textContent = email;
+      document.getElementById("d_phone").textContent = phone;
+      document.getElementById("d_persons").textContent = persons;
+      document.getElementById("d_food").textContent = food;
+      document.getElementById("d_number").textContent = ticketNumber;
 
       var qrText = buildQrText({
-        ticket_number: data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN",
-        first_name: data.first_name || "—",
-        last_name: data.last_name || "—",
-        email: data.email || "—",
-        phone: data.phone || "—",
-        persons: data.persons || "1",
-        food: data.food || "Nein"
+        ticket_number: ticketNumber,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone: phone,
+        persons: persons,
+        food: food
       });
 
       document.getElementById("t_qr").src = qrUrl(qrText);
@@ -666,10 +818,12 @@
 
     function downloadPdf() {
       updatePreview();
-      var ticket = document.querySelector(".ticket");
+
+      var ticket = document.getElementById("ticketSheet");
       var clone = ticket.cloneNode(true);
-      clone.style.maxWidth = "794px";
-      clone.style.width = "794px";
+
+      clone.style.width = "730px";
+      clone.style.maxWidth = "730px";
       clone.style.margin = "0";
       clone.style.boxShadow = "none";
 
@@ -677,8 +831,8 @@
       wrapper.style.position = "fixed";
       wrapper.style.left = "-99999px";
       wrapper.style.top = "0";
-      wrapper.style.width = "794px";
-      wrapper.style.background = "#fff";
+      wrapper.style.width = "730px";
+      wrapper.style.background = "#ffffff";
       wrapper.appendChild(clone);
       document.body.appendChild(wrapper);
 
@@ -696,24 +850,24 @@
           format: "a4"
         });
 
-        var pdfWidth = 210;
-        var pdfHeight = 297;
-        var imgWidth = pdfWidth;
+        var pageWidth = 210;
+        var pageHeight = 297;
+        var margin = 8;
+        var usableWidth = pageWidth - margin * 2;
+        var usableHeight = pageHeight - margin * 2;
+
+        var imgWidth = usableWidth;
         var imgHeight = canvas.height * imgWidth / canvas.width;
 
-        if (imgHeight <= pdfHeight) {
-          pdf.addImage(imgData, "JPEG", 0, 0, imgWidth, imgHeight);
-        } else {
-          var position = 0;
-          var remainingHeight = imgHeight;
-
-          while (remainingHeight > 0) {
-            pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
-            remainingHeight -= pdfHeight;
-            position -= pdfHeight;
-            if (remainingHeight > 0) pdf.addPage();
-          }
+        if (imgHeight > usableHeight) {
+          imgHeight = usableHeight;
+          imgWidth = canvas.width * imgHeight / canvas.height;
         }
+
+        var x = (pageWidth - imgWidth) / 2;
+        var y = (pageHeight - imgHeight) / 2;
+
+        pdf.addImage(imgData, "JPEG", x, y, imgWidth, imgHeight);
 
         var fileName = "Heimatlieder-Abend-" + (latestTicketNumber || "Ticket") + ".pdf";
         pdf.save(fileName);
