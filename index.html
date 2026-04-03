@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gasthaus Alt Grieth – Ticket</title>
+  <title>Reservierung – Gasthaus Alt Grieth</title>
   <meta name="robots" content="noindex" />
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
@@ -22,7 +22,7 @@
     .wrap {
       max-width: 860px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 14px;
     }
 
     .page-topline {
@@ -167,14 +167,14 @@
       width: 100%;
       max-width: 760px;
       margin: 0 auto 18px;
-      padding: 14px;
+      padding: 12px;
       position: relative;
       background:
-        linear-gradient(rgba(255,251,242,0.98), rgba(255,251,242,0.98)),
+        linear-gradient(rgba(255,251,242,0.985), rgba(255,251,242,0.985)),
         repeating-linear-gradient(
           0deg,
-          rgba(189,173,130,0.04),
-          rgba(189,173,130,0.04) 2px,
+          rgba(189,173,130,0.035),
+          rgba(189,173,130,0.035) 2px,
           transparent 2px,
           transparent 8px
         );
@@ -185,18 +185,34 @@
     .sheet::before {
       content: "";
       position: absolute;
-      top: 10px;
-      right: 10px;
-      bottom: 10px;
-      left: 10px;
-      border: 1px solid rgba(189,173,130,0.9);
+      top: 8px;
+      right: 8px;
+      bottom: 8px;
+      left: 8px;
+      border: 1px solid rgba(189,173,130,0.95);
       pointer-events: none;
+      z-index: 1;
+    }
+
+    .sheet::after {
+      content: "ALT GRIETH";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-size: 86px;
+      font-weight: 700;
+      letter-spacing: 8px;
+      color: rgba(189,173,130,0.07);
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .ticket-half {
       position: relative;
       z-index: 2;
-      padding: 4px 2px;
+      padding: 2px 2px 0;
     }
 
     .ticket-header {
@@ -236,13 +252,13 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px 12px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .field-box {
       border: 1px solid #bdad82;
       padding: 8px 9px;
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.82);
       min-height: 52px;
     }
 
@@ -269,8 +285,8 @@
 
     .ticket-bottom {
       display: grid;
-      grid-template-columns: 1fr 110px;
-      gap: 12px;
+      grid-template-columns: 1fr 112px;
+      gap: 10px;
       align-items: center;
       margin-top: 4px;
     }
@@ -279,7 +295,7 @@
       border: 2px solid #bdad82;
       padding: 10px;
       text-align: center;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.78);
     }
 
     .ticket-number-label {
@@ -326,7 +342,7 @@
 
     .cut-line {
       position: relative;
-      margin: 12px 0;
+      margin: 10px 0;
       border-top: 2px dashed #bdad82;
       z-index: 2;
     }
@@ -344,7 +360,7 @@
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 12px; }
+      .wrap { padding: 10px; }
       h1 { font-size: 27px; }
       .intro { font-size: 14px; }
       .status-grid { grid-template-columns: 1fr; }
@@ -354,6 +370,19 @@
       button {
         min-height: 38px;
         font-size: 13px;
+      }
+      .sheet {
+        padding: 8px;
+      }
+      .sheet::before {
+        top: 6px;
+        right: 6px;
+        bottom: 6px;
+        left: 6px;
+      }
+      .sheet::after {
+        font-size: 54px;
+        letter-spacing: 5px;
       }
     }
 
@@ -720,8 +749,8 @@
       var ticket = document.getElementById("ticketSheet");
       var clone = ticket.cloneNode(true);
 
-      clone.style.width = "730px";
-      clone.style.maxWidth = "730px";
+      clone.style.width = "790px";
+      clone.style.maxWidth = "790px";
       clone.style.margin = "0";
       clone.style.boxShadow = "none";
 
@@ -729,13 +758,13 @@
       wrapper.style.position = "fixed";
       wrapper.style.left = "-99999px";
       wrapper.style.top = "0";
-      wrapper.style.width = "730px";
+      wrapper.style.width = "790px";
       wrapper.style.background = "#ffffff";
       wrapper.appendChild(clone);
       document.body.appendChild(wrapper);
 
       html2canvas(clone, {
-        scale: 2,
+        scale: 2.5,
         backgroundColor: "#ffffff",
         useCORS: true
       }).then(function(canvas) {
@@ -750,7 +779,7 @@
 
         var pageWidth = 210;
         var pageHeight = 297;
-        var margin = 8;
+        var margin = 3;
         var usableWidth = pageWidth - margin * 2;
         var usableHeight = pageHeight - margin * 2;
 
