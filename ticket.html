@@ -1,395 +1,389 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Heimat Ticket PDF</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Heimat Ticket PDF</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+*{box-sizing:border-box;}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f2e8;
-      color: #160520;
-    }
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f7f2e8;
+color:#160520;
+}
 
-    .wrap {
-      width: 794px;
-      margin: 0 auto;
-      padding: 0;
-    }
+.wrap{
+width:794px;
+margin:0 auto;
+padding:0;
+}
 
-    .sheet {
-      width: 794px;
-      height: 1123px; /* A4 at 96dpi */
-      background: #fffdf8;
-      border: 2px solid #bdad82;
-      position: relative;
-      overflow: hidden;
-      padding: 10px;
-    }
+.sheet{
+width:794px;
+height:1123px; /* A4 @ 96dpi */
+margin:0 auto;
+background:#fffdf8;
+border:2px solid #bdad82;
+position:relative;
+overflow:hidden;
+}
 
-    .sheet::before {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border: 1px solid #d7c79d;
-      pointer-events: none;
-    }
+/* Exact 1 cm print-safe area */
+.inner{
+position:absolute;
+left:38px;
+right:38px;
+top:38px;
+bottom:38px;
+border:1px solid #d7c79d;
+padding:14px;
+}
 
-    .ticket-half {
-      position: relative;
-      z-index: 1;
-      height: 534px;
-      background: #ffffff;
-      border: 1px solid #d7c79d;
-      padding: 10px 12px 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+.ticket-half{
+height:484px;
+background:#fff;
+border:1px solid #d7c79d;
+padding:12px 14px 10px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
 
-    .ticket-header {
-      text-align: center;
-      margin-bottom: 6px;
-    }
+.ticket-header{
+text-align:center;
+margin-bottom:6px;
+}
 
-    .ticket-house {
-      font-size: 10px;
-      letter-spacing: 4px;
-      color: #7a6a48;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-      line-height: 1.1;
-    }
+.ticket-house{
+font-size:10px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#8a7750;
+margin-bottom:5px;
+line-height:1.1;
+}
 
-    .ticket-title {
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      line-height: 1.05;
-      margin: 0;
-    }
+.ticket-title{
+font-size:26px;
+font-weight:700;
+letter-spacing:1px;
+line-height:1.05;
+margin:0;
+}
 
-    .ticket-sub {
-      font-size: 11px;
-      margin-top: 4px;
-      line-height: 1.2;
-    }
+.ticket-sub{
+font-size:12px;
+line-height:1.2;
+margin-top:5px;
+}
 
-    .divider {
-      width: 110px;
-      height: 1px;
-      background: #bdad82;
-      margin: 8px auto 10px;
-    }
+.divider{
+width:145px;
+height:1px;
+background:#bdad82;
+margin:10px auto 12px;
+}
 
-    .ticket-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px;
-      margin: 0;
-    }
+.ticket-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:12px;
+}
 
-    .field-box {
-      border: 1px solid #d7c79d;
-      background: #fff;
-      padding: 5px 7px;
-      min-height: 66px;
-    }
+.field-box{
+border:1px solid #d7c79d;
+background:#fff;
+padding:8px 10px;
+height:84px;
+display:flex;
+flex-direction:column;
+justify-content:flex-start;
+}
 
-    .field-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      color: #7a6a48;
-      margin-bottom: 4px;
-      line-height: 1.1;
-    }
+.field-label{
+font-size:10px;
+text-transform:uppercase;
+color:#8a7750;
+margin-bottom:5px;
+line-height:1.1;
+}
 
-    .field-value {
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.18;
-      word-break: break-word;
-    }
+.field-value{
+font-size:16px;
+font-weight:700;
+line-height:1.2;
+word-break:break-word;
+}
 
-    .ticket-bottom {
-      display: grid;
-      grid-template-columns: 1fr 88px;
-      gap: 10px;
-      align-items: center;
-      margin-top: 10px;
-    }
+.ticket-bottom{
+display:grid;
+grid-template-columns:1fr 112px;
+gap:12px;
+align-items:stretch;
+margin-top:6px;
+}
 
-    .ticket-number-box {
-      border: 2px solid #bdad82;
-      background: #fff;
-      padding: 8px;
-      text-align: center;
-      min-height: 88px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+.ticket-number-box{
+border:2px solid #bdad82;
+background:#fff;
+padding:12px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+min-height:112px;
+}
 
-    .ticket-number-label {
-      font-size: 9px;
-      text-transform: uppercase;
-      color: #7a6a48;
-      margin-bottom: 4px;
-      line-height: 1.1;
-    }
+.ticket-number-label{
+font-size:10px;
+text-transform:uppercase;
+color:#8a7750;
+margin-bottom:6px;
+line-height:1.1;
+}
 
-    .ticket-number {
-      font-size: 12px;
-      font-weight: 700;
-      line-height: 1.2;
-      word-break: break-word;
-    }
+.ticket-number{
+font-size:18px;
+font-weight:700;
+line-height:1.2;
+word-break:break-word;
+}
 
-    .free-line {
-      font-size: 10px;
-      font-weight: 700;
-      margin-top: 5px;
-      line-height: 1.1;
-    }
+.free-line{
+font-size:12px;
+font-weight:700;
+margin-top:7px;
+line-height:1.1;
+}
 
-    .qr-wrap img {
-      width: 88px;
-      height: 88px;
-      display: block;
-      border: 1px solid #d7c79d;
-      background: #fff;
-      padding: 4px;
-    }
+.qr-wrap{
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid #d7c79d;
+background:#fff;
+min-height:112px;
+}
 
-    .ticket-notes {
-      text-align: center;
-      font-size: 9px;
-      line-height: 1.22;
-      margin-top: 7px;
-      min-height: 24px;
-    }
+.qr-wrap img{
+width:102px;
+height:102px;
+display:block;
+}
 
-    .cut-line {
-      position: relative;
-      height: 25px;
-      margin: 6px 0;
-      border-top: 2px dashed #bdad82;
-    }
+.ticket-notes{
+text-align:center;
+font-size:11px;
+line-height:1.25;
+margin-top:10px;
+min-height:28px;
+}
 
-    .cut-line span {
-      position: absolute;
-      left: 50%;
-      top: -12px;
-      transform: translateX(-50%);
-      background: #fffdf8;
-      padding: 0 8px;
-      font-size: 15px;
-      line-height: 1;
-    }
+.cut-line{
+position:relative;
+height:26px;
+margin:10px 0;
+border-top:2px dashed #bdad82;
+}
 
-    .actions {
-      width: 794px;
-      margin: 16px auto 24px;
-      text-align: center;
-    }
+.cut-line span{
+position:absolute;
+left:50%;
+top:-12px;
+transform:translateX(-50%);
+background:#fffdf8;
+padding:0 8px;
+font-size:16px;
+line-height:1;
+}
 
-    button {
-      padding: 10px 18px;
-      border: none;
-      background: #160520;
-      color: #fff;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 700;
-    }
+.actions{
+width:794px;
+margin:16px auto 24px;
+text-align:center;
+}
 
-    .message {
-      width: 794px;
-      margin: 30px auto;
-      text-align: center;
-      font-size: 16px;
-    }
+button{
+padding:11px 18px;
+border:none;
+background:#160520;
+color:#fff;
+cursor:pointer;
+font-size:14px;
+font-weight:700;
+}
 
-    @media print {
-      body {
-        background: #fff;
-      }
-      .actions {
-        display: none;
-      }
-      .wrap {
-        margin: 0;
-      }
-      .sheet {
-        border: none;
-      }
-    }
+.message{
+width:794px;
+margin:30px auto;
+text-align:center;
+font-size:16px;
+}
 
-    @media (max-width: 820px) {
-      body {
-        overflow-x: auto;
-      }
-      .wrap,
-      .actions,
-      .message {
-        width: 794px;
-      }
-    }
-  </style>
+@media print{
+body{background:#fff;}
+.actions{display:none;}
+}
+
+@media(max-width:820px){
+body{overflow-x:auto;}
+.wrap,.actions,.message{width:794px;}
+}
+</style>
 </head>
+
 <body>
-  <div id="app" class="message">Ticket wird geladen...</div>
+<div id="app" class="message">Ticket wird geladen...</div>
 
-  <script>
-    (function () {
-      const params = new URLSearchParams(window.location.search);
-      const ticket = params.get("ticket");
-      const autoPdf = params.get("pdf");
-      const app = document.getElementById("app");
+<script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const ticket = params.get("ticket");
+  const autoPdf = params.get("pdf");
+  const app = document.getElementById("app");
 
-      function esc(value) {
-        return String(value == null ? "" : value)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
-      }
+  function esc(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
 
-      function qr(url) {
-        return "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" + encodeURIComponent(url);
-      }
+  function qr(url) {
+    return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(url);
+  }
 
-      function buildTicket(data) {
-        const url = "https://heimat-ticket.vercel.app/ticket.html?ticket=" + encodeURIComponent(data.ticket_number);
+  function buildHalf(data, url) {
+    return `
+      <div class="ticket-half">
+        <div>
+          <div class="ticket-header">
+            <div class="ticket-house">Gasthaus Alt Grieth</div>
+            <div class="ticket-title">HEIMATLIEDER ABEND</div>
+            <div class="ticket-sub">Samstag · 6. Juni · 20:00 Uhr</div>
+          </div>
 
-        function half() {
-          return `
-            <div class="ticket-half">
-              <div>
-                <div class="ticket-header">
-                  <div class="ticket-house">Gasthaus Alt Grieth</div>
-                  <div class="ticket-title">HEIMATLIEDER ABEND</div>
-                  <div class="ticket-sub">Samstag · 6. Juni · 20:00 Uhr</div>
-                </div>
+          <div class="divider"></div>
 
-                <div class="divider"></div>
-
-                <div class="ticket-grid">
-                  <div class="field-box">
-                    <div class="field-label">Vorname</div>
-                    <div class="field-value">${esc(data.first_name)}</div>
-                  </div>
-                  <div class="field-box">
-                    <div class="field-label">Nachname</div>
-                    <div class="field-value">${esc(data.last_name)}</div>
-                  </div>
-                  <div class="field-box">
-                    <div class="field-label">E-Mail</div>
-                    <div class="field-value">${esc(data.email)}</div>
-                  </div>
-                  <div class="field-box">
-                    <div class="field-label">Telefon</div>
-                    <div class="field-value">${esc(data.phone)}</div>
-                  </div>
-                  <div class="field-box">
-                    <div class="field-label">Personen</div>
-                    <div class="field-value">${esc(data.persons)}</div>
-                  </div>
-                  <div class="field-box">
-                    <div class="field-label">Essen</div>
-                    <div class="field-value">${esc(data.food)}</div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="ticket-bottom">
-                  <div class="ticket-number-box">
-                    <div class="ticket-number-label">Ticketnummer</div>
-                    <div class="ticket-number">${esc(data.ticket_number)}</div>
-                    <div class="free-line">EINTRITT FREI</div>
-                  </div>
-
-                  <div class="qr-wrap">
-                    <img src="${qr(url)}" alt="QR Code">
-                  </div>
-                </div>
-
-                <div class="ticket-notes">
-                  Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
-                  Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
-                </div>
-              </div>
+          <div class="ticket-grid">
+            <div class="field-box">
+              <div class="field-label">Vorname</div>
+              <div class="field-value">${esc(data.first_name)}</div>
             </div>
-          `;
-        }
+            <div class="field-box">
+              <div class="field-label">Nachname</div>
+              <div class="field-value">${esc(data.last_name)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">E-Mail</div>
+              <div class="field-value">${esc(data.email)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Telefon</div>
+              <div class="field-value">${esc(data.phone)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Personen</div>
+              <div class="field-value">${esc(data.persons)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Essen</div>
+              <div class="field-value">${esc(data.food)}</div>
+            </div>
+          </div>
+        </div>
 
-        return `
-          <div class="wrap">
-            <div class="sheet" id="pdfSheet">
-              ${half()}
-              <div class="cut-line"><span>✂</span></div>
-              ${half()}
+        <div>
+          <div class="ticket-bottom">
+            <div class="ticket-number-box">
+              <div class="ticket-number-label">Ticketnummer</div>
+              <div class="ticket-number">${esc(data.ticket_number)}</div>
+              <div class="free-line">EINTRITT FREI</div>
+            </div>
+
+            <div class="qr-wrap">
+              <img src="${qr(url)}" alt="QR Code">
             </div>
           </div>
 
-          <div class="actions">
-            <button id="pdfBtn">PDF herunterladen</button>
+          <div class="ticket-notes">
+            Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
+            Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
           </div>
-        `;
-      }
+        </div>
+      </div>
+    `;
+  }
 
-      function downloadPdf(filename) {
-        const element = document.getElementById("pdfSheet");
-        html2canvas(element, {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff"
-        }).then(canvas => {
-          const img = canvas.toDataURL("image/jpeg", 1);
-          const pdf = new window.jspdf.jsPDF("p", "mm", "a4");
-          pdf.addImage(img, "JPEG", 0, 0, 210, 297);
-          pdf.save(filename + ".pdf");
-        });
-      }
+  function downloadPdf(filename) {
+    const element = document.getElementById("pdfSheet");
+    html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    }).then(canvas => {
+      const img = canvas.toDataURL("image/jpeg", 1);
+      const pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+      pdf.addImage(img, "JPEG", 0, 0, 210, 297);
+      pdf.save(filename + ".pdf");
+    });
+  }
 
-      if (!ticket) {
-        app.innerHTML = "Kein Ticket angegeben";
+  if (!ticket) {
+    app.innerHTML = "Kein Ticket angegeben";
+    return;
+  }
+
+  fetch("/api/lookup?ticket=" + encodeURIComponent(ticket))
+    .then(r => r.json())
+    .then(data => {
+      if (!data || !data.success) {
+        app.innerHTML = "Reservierung nicht gefunden";
         return;
       }
 
-      fetch("/api/lookup?ticket=" + encodeURIComponent(ticket))
-        .then(r => r.json())
-        .then(data => {
-          if (!data || !data.success) {
-            app.innerHTML = "Reservierung nicht gefunden";
-            return;
-          }
+      const url = "https://heimat-ticket.vercel.app/ticket.html?ticket=" + encodeURIComponent(data.ticket_number);
 
-          app.className = "";
-          app.innerHTML = buildTicket(data);
+      app.className = "";
+      app.innerHTML = `
+        <div class="wrap">
+          <div class="sheet" id="pdfSheet">
+            <div class="inner">
+              ${buildHalf(data, url)}
+              <div class="cut-line"><span>✂</span></div>
+              ${buildHalf(data, url)}
+            </div>
+          </div>
+        </div>
 
-          document.getElementById("pdfBtn").addEventListener("click", function () {
-            downloadPdf(data.ticket_number);
-          });
+        <div class="actions">
+          <button id="pdfBtn">PDF herunterladen</button>
+        </div>
+      `;
 
-          if (autoPdf === "1") {
-            setTimeout(function () {
-              downloadPdf(data.ticket_number);
-            }, 500);
-          }
-        })
-        .catch(() => {
-          app.innerHTML = "Reservierung konnte nicht geladen werden";
-        });
-    })();
-  </script>
+      document.getElementById("pdfBtn").addEventListener("click", function () {
+        downloadPdf(data.ticket_number);
+      });
+
+      if (autoPdf === "1") {
+        setTimeout(function () {
+          downloadPdf(data.ticket_number);
+        }, 500);
+      }
+    })
+    .catch(() => {
+      app.innerHTML = "Reservierung konnte nicht geladen werden";
+    });
+})();
+</script>
 </body>
 </html>
