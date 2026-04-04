@@ -69,6 +69,15 @@ font-size:30px;
 font-weight:bold;
 }
 
+.message{
+display:none;
+margin:0 0 14px;
+padding:12px;
+border:1px solid #bdad82;
+background:#fff;
+text-align:center;
+}
+
 .form-box{
 border:2px solid #bdad82;
 padding:18px;
@@ -81,11 +90,20 @@ grid-template-columns:1fr 1fr;
 gap:12px;
 }
 
+label{
+display:block;
+margin:0 0 6px;
+font-weight:bold;
+font-size:14px;
+}
+
 input,select{
 width:100%;
 padding:10px;
 border:1px solid #bdad82;
 font-size:14px;
+background:#fff;
+color:#160520;
 }
 
 .btn-row{
@@ -122,203 +140,386 @@ aspect-ratio:210/297;
 background:#fff;
 padding:16px;
 border:2px solid #bdad82;
+background:
+linear-gradient(rgba(255,251,242,0.96), rgba(255,251,242,0.96)),
+url("https://i.postimg.cc/0yKq0kXr/rhein-soft.jpg");
+background-size:cover;
+background-position:center;
 }
 
 .ticket-half{
-height:50%;
+height:calc((100% - 28px)/2);
 display:flex;
 flex-direction:column;
 justify-content:space-between;
-padding:8px;
+padding:10px;
+background:rgba(255,255,255,0.64);
+}
+
+.ticket-header{
+text-align:center;
+margin-bottom:10px;
+}
+
+.ticket-house{
+font-size:12px;
+letter-spacing:4px;
+color:#6a5a36;
+margin-bottom:6px;
+}
+
+.ticket-title{
+font-size:28px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+.ticket-eventline{
+font-size:14px;
+margin-top:6px;
 }
 
 .ticket-grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:6px;
+gap:8px;
 }
 
 .field-box{
 border:1px solid #bdad82;
-padding:6px;
-font-size:12px;
+padding:6px 8px;
+background:rgba(255,255,255,0.92);
+}
+
+.field-label{
+font-size:10px;
+color:#6a5a36;
+margin-bottom:4px;
+text-transform:uppercase;
+}
+
+.field-value{
+font-size:14px;
+font-weight:bold;
+word-break:break-word;
 }
 
 .ticket-bottom{
 display:grid;
-grid-template-columns:1fr 90px;
+grid-template-columns:1fr 100px;
 gap:8px;
 align-items:center;
+margin-top:10px;
 }
 
 .ticket-number-box{
 border:2px solid #bdad82;
-padding:8px;
+padding:10px;
 text-align:center;
+background:#fff;
+}
+
+.ticket-number-label{
+font-size:10px;
+color:#6a5a36;
+text-transform:uppercase;
+margin-bottom:4px;
+}
+
+.ticket-number{
+font-size:16px;
+font-weight:bold;
+word-break:break-word;
+}
+
+.free-line{
+margin-top:6px;
+font-size:11px;
+font-weight:bold;
+}
+
+.qr-wrap img{
+width:90px;
+height:90px;
+border:1px solid #bdad82;
+background:#fff;
+padding:4px;
+}
+
+.ticket-notes{
+text-align:center;
+font-size:11px;
+margin-top:8px;
+line-height:1.35;
 }
 
 .cut-line{
 border-top:2px dashed #bdad82;
 margin:10px 0;
 text-align:center;
+position:relative;
+height:8px;
+}
+
+.cut-line span{
+position:absolute;
+left:50%;
+top:-11px;
+transform:translateX(-50%);
+background:#fffdf8;
+padding:0 8px;
 }
 
 @media(max-width:720px){
+.wrap{padding:10px;}
+h1{font-size:28px;}
+.intro{font-size:14px;}
+.ticket-title{font-size:22px;}
+.ticket-eventline{font-size:12px;}
 .ticket-grid{grid-template-columns:1fr 1fr;}
+.field-value{font-size:12px;}
+.ticket-number{font-size:14px;}
+.qr-wrap img{width:80px;height:80px;}
+.ticket-notes{font-size:10px;}
 }
 </style>
 </head>
-
 <body>
 
 <div class="wrap">
-
 <div class="page-topline">GASTHAUS ALT GRIETH</div>
 
-<h1>HEIMATLIEDER ABEND</h1>
+<h1>HEIMATLIEDER ABEND – TICKETS</h1>
 
 <div class="intro">
-Eintritt frei – Reservierung optional.<br>
-Sichern Sie sich einen Sitzplatz am Tisch.
+Der Eintritt ist frei. Wer sich einen Sitzplatz an einem Tisch sichern möchte, kann hier kostenlos ein Ticket bestellen.
 </div>
 
 <div class="status-grid">
-<div class="status-box">
-<div class="status-label">Tische frei</div>
-<div class="status-value" id="availableTables">-</div>
+  <div class="status-box">
+    <div class="status-label">Tische frei</div>
+    <div class="status-value" id="availableTables">-</div>
+  </div>
+  <div class="status-box">
+    <div class="status-label">Plätze frei</div>
+    <div class="status-value" id="availableSeats">-</div>
+  </div>
 </div>
-<div class="status-box">
-<div class="status-label">Plätze frei</div>
-<div class="status-value" id="availableSeats">-</div>
-</div>
-</div>
+
+<div class="message" id="messageBox"></div>
 
 <div class="form-box">
-<div class="form-grid">
-<input id="first_name" placeholder="Vorname">
-<input id="last_name" placeholder="Nachname">
-<input id="email" placeholder="E-Mail">
-<input id="phone" placeholder="Telefon">
-<input id="persons" type="number" value="1">
-<select id="food">
-<option>Ja</option>
-<option selected>Nein</option>
-</select>
-</div>
+  <div class="form-grid">
+    <div>
+      <label for="first_name">Vorname</label>
+      <input id="first_name" placeholder="Vorname">
+    </div>
+    <div>
+      <label for="last_name">Nachname</label>
+      <input id="last_name" placeholder="Nachname">
+    </div>
+    <div>
+      <label for="email">E-Mail</label>
+      <input id="email" placeholder="E-Mail">
+    </div>
+    <div>
+      <label for="phone">Telefon</label>
+      <input id="phone" placeholder="Telefon">
+    </div>
+    <div>
+      <label for="persons">Personen</label>
+      <input id="persons" type="number" value="1" min="1">
+    </div>
+    <div>
+      <label for="food">Essen</label>
+      <select id="food">
+        <option value="Ja">Ja</option>
+        <option value="Nein" selected>Nein</option>
+      </select>
+    </div>
+  </div>
 
-<div class="btn-row">
-<button class="btn-primary" onclick="reserve()">Reservieren</button>
-<button class="btn-secondary" onclick="openTicket()">Ticket öffnen</button>
-</div>
+  <div class="btn-row">
+    <button class="btn-primary" id="reserveBtn" type="button">Reservieren</button>
+    <button class="btn-secondary" id="ticketBtn" type="button">Ticket öffnen</button>
+  </div>
 </div>
 
 <div class="preview-title">VORSCHAU</div>
 
-<div class="sheet" id="ticket">
+<div class="sheet" id="ticketSheet">
 
-<div class="ticket-half">
-<div class="ticket-grid">
-<div class="field-box" id="t1_first_name"></div>
-<div class="field-box" id="t1_last_name"></div>
-<div class="field-box" id="t1_email"></div>
-<div class="field-box" id="t1_phone"></div>
-<div class="field-box" id="t1_persons"></div>
-<div class="field-box" id="t1_food"></div>
-</div>
+  <div class="ticket-half">
+    <div>
+      <div class="ticket-header">
+        <div class="ticket-house">GASTHAUS ALT GRIETH</div>
+        <div class="ticket-title">HEIMATLIEDER ABEND</div>
+        <div class="ticket-eventline">SAMSTAG · 6. JUNI · 20:00 UHR</div>
+      </div>
 
-<div class="ticket-bottom">
-<div class="ticket-number-box" id="t1_number"></div>
-<img id="t1_qr">
-</div>
-</div>
+      <div class="ticket-grid">
+        <div class="field-box"><div class="field-label">Vorname</div><div class="field-value" id="t1_first_name">—</div></div>
+        <div class="field-box"><div class="field-label">Nachname</div><div class="field-value" id="t1_last_name">—</div></div>
+        <div class="field-box"><div class="field-label">E-Mail</div><div class="field-value" id="t1_email">—</div></div>
+        <div class="field-box"><div class="field-label">Telefon</div><div class="field-value" id="t1_phone">—</div></div>
+        <div class="field-box"><div class="field-label">Personen</div><div class="field-value" id="t1_persons">1</div></div>
+        <div class="field-box"><div class="field-label">Essen</div><div class="field-value" id="t1_food">Nein</div></div>
+      </div>
+    </div>
 
-<div class="cut-line">✂</div>
+    <div>
+      <div class="ticket-bottom">
+        <div class="ticket-number-box">
+          <div class="ticket-number-label">Ticketnummer</div>
+          <div class="ticket-number" id="t1_number_box">WIRD BEI RESERVIERUNG VERGEBEN</div>
+          <div class="free-line">EINTRITT FREI</div>
+        </div>
+        <div class="qr-wrap">
+          <a id="t1_qr_link" href="#" target="_blank" rel="noopener noreferrer">
+            <img id="t1_qr" alt="QR Code">
+          </a>
+        </div>
+      </div>
 
-<div class="ticket-half">
-<div class="ticket-grid">
-<div class="field-box" id="t2_first_name"></div>
-<div class="field-box" id="t2_last_name"></div>
-<div class="field-box" id="t2_email"></div>
-<div class="field-box" id="t2_phone"></div>
-<div class="field-box" id="t2_persons"></div>
-<div class="field-box" id="t2_food"></div>
-</div>
+      <div class="ticket-notes">
+        Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
+        Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+      </div>
+    </div>
+  </div>
 
-<div class="ticket-bottom">
-<div class="ticket-number-box" id="t2_number"></div>
-<img id="t2_qr">
-</div>
-</div>
+  <div class="cut-line"><span>✂</span></div>
+
+  <div class="ticket-half">
+    <div>
+      <div class="ticket-header">
+        <div class="ticket-house">GASTHAUS ALT GRIETH</div>
+        <div class="ticket-title">HEIMATLIEDER ABEND</div>
+        <div class="ticket-eventline">SAMSTAG · 6. JUNI · 20:00 UHR</div>
+      </div>
+
+      <div class="ticket-grid">
+        <div class="field-box"><div class="field-label">Vorname</div><div class="field-value" id="t2_first_name">—</div></div>
+        <div class="field-box"><div class="field-label">Nachname</div><div class="field-value" id="t2_last_name">—</div></div>
+        <div class="field-box"><div class="field-label">E-Mail</div><div class="field-value" id="t2_email">—</div></div>
+        <div class="field-box"><div class="field-label">Telefon</div><div class="field-value" id="t2_phone">—</div></div>
+        <div class="field-box"><div class="field-label">Personen</div><div class="field-value" id="t2_persons">1</div></div>
+        <div class="field-box"><div class="field-label">Essen</div><div class="field-value" id="t2_food">Nein</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="ticket-bottom">
+        <div class="ticket-number-box">
+          <div class="ticket-number-label">Ticketnummer</div>
+          <div class="ticket-number" id="t2_number_box">WIRD BEI RESERVIERUNG VERGEBEN</div>
+          <div class="free-line">EINTRITT FREI</div>
+        </div>
+        <div class="qr-wrap">
+          <a id="t2_qr_link" href="#" target="_blank" rel="noopener noreferrer">
+            <img id="t2_qr" alt="QR Code">
+          </a>
+        </div>
+      </div>
+
+      <div class="ticket-notes">
+        Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
+        Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+      </div>
+    </div>
+  </div>
 
 </div>
-
 </div>
 
 <script>
+let latestTicket = "";
 
-let latestTicket="";
+function showMessage(text, isError) {
+  const box = document.getElementById("messageBox");
+  box.style.display = "block";
+  box.textContent = text;
+  box.style.borderColor = isError ? "#b94a48" : "#bdad82";
+  box.style.background = isError ? "#fff4f4" : "#fff";
+}
 
-function fill(data){
+function setStatus(tables, seats) {
+  document.getElementById("availableTables").textContent = tables;
+  document.getElementById("availableSeats").textContent = seats;
+}
 
-let url="https://www.altgrieth.de/heimat-tickets?ticket="+data.ticket_number;
+function getTicketUrl(ticketNumber, withPrint) {
+  let url = "https://heimat-ticket.vercel.app/ticket.html?ticket=" + encodeURIComponent(ticketNumber || "");
+  if (withPrint) url += "&print=1";
+  return url;
+}
 
-["t1","t2"].forEach(p=>{
-document.getElementById(p+"_first_name").innerText=data.first_name;
-document.getElementById(p+"_last_name").innerText=data.last_name;
-document.getElementById(p+"_email").innerText=data.email;
-document.getElementById(p+"_phone").innerText=data.phone;
-document.getElementById(p+"_persons").innerText=data.persons;
-document.getElementById(p+"_food").innerText=data.food;
-document.getElementById(p+"_number").innerText=data.ticket_number;
+function fill(data) {
+  ["t1","t2"].forEach(function(p){
+    document.getElementById(p+"_first_name").textContent = data.first_name || "—";
+    document.getElementById(p+"_last_name").textContent = data.last_name || "—";
+    document.getElementById(p+"_email").textContent = data.email || "—";
+    document.getElementById(p+"_phone").textContent = data.phone || "—";
+    document.getElementById(p+"_persons").textContent = data.persons || "1";
+    document.getElementById(p+"_food").textContent = data.food || "Nein";
+    document.getElementById(p+"_number_box").textContent = data.ticket_number || "WIRD BEI RESERVIERUNG VERGEBEN";
 
-document.getElementById(p+"_qr").src=
-"https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+encodeURIComponent(url);
+    const url = getTicketUrl(data.ticket_number, false);
+    document.getElementById(p+"_qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(url);
+    document.getElementById(p+"_qr_link").href = url;
+  });
+}
+
+function loadStatus() {
+  fetch("/api/status")
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d && d.success) {
+        setStatus(d.available_tables, d.available_seats);
+      }
+    });
+}
+
+function reserve() {
+  let data = {
+    first_name: document.getElementById("first_name").value,
+    last_name: document.getElementById("last_name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    persons: document.getElementById("persons").value,
+    food: document.getElementById("food").value
+  };
+
+  fetch("/api/reserve?" + new URLSearchParams(data).toString())
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res || !res.success) {
+        showMessage((res && res.message) ? res.message : "Reservierung fehlgeschlagen.", true);
+        return;
+      }
+      latestTicket = res.ticket_number;
+      fill(res);
+      loadStatus();
+      showMessage("Reservierung erfolgreich. Ticketnummer: " + res.ticket_number, false);
+    })
+    .catch(function(){
+      showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
+    });
+}
+
+function openTicket() {
+  if (!latestTicket) {
+    showMessage("Bitte zuerst reservieren.", true);
+    return;
+  }
+  window.open(getTicketUrl(latestTicket, true), "_blank");
+}
+
+window.addEventListener("load", function() {
+  loadStatus();
+  document.getElementById("reserveBtn").addEventListener("click", reserve);
+  document.getElementById("ticketBtn").addEventListener("click", openTicket);
 });
-}
-
-function reserve(){
-
-let data={
-first_name:first_name.value,
-last_name:last_name.value,
-email:email.value,
-phone:phone.value,
-persons:persons.value,
-food:food.value
-};
-
-fetch("/api/reserve?"+new URLSearchParams(data))
-.then(r=>r.json())
-.then(res=>{
-latestTicket=res.ticket_number;
-fill(res);
-loadStatus();
-});
-}
-
-function openTicket(){
-if(!latestTicket){
-alert("Eerst reserveren");
-return;
-}
-
-window.open(
-"https://www.altgrieth.de/heimat-tickets?ticket="+latestTicket+"&print=1",
-"_blank"
-);
-}
-
-function loadStatus(){
-fetch("/api/status")
-.then(r=>r.json())
-.then(d=>{
-availableTables.innerText=d.available_tables;
-availableSeats.innerText=d.available_seats;
-});
-}
-
-window.onload=loadStatus;
-
 </script>
 
 </body>
