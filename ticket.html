@@ -26,7 +26,7 @@ padding:0;
 
 .sheet{
 width:794px;
-height:1123px; /* A4 @ 96dpi */
+height:1123px;
 margin:0 auto;
 background:#fffdf8;
 border:2px solid #bdad82;
@@ -34,7 +34,6 @@ position:relative;
 overflow:hidden;
 }
 
-/* Exact 1 cm print-safe area */
 .inner{
 position:absolute;
 left:38px;
@@ -43,10 +42,15 @@ top:38px;
 bottom:38px;
 border:1px solid #d7c79d;
 padding:14px;
+background:
+linear-gradient(rgba(255,251,242,0.96), rgba(255,251,242,0.96)),
+url("https://i.postimg.cc/0yKq0kXr/rhein-soft.jpg");
+background-size:cover;
+background-position:center;
 }
 
 .ticket-half{
-height:484px;
+height:460px;
 background:#fff;
 border:1px solid #d7c79d;
 padding:12px 14px 10px;
@@ -94,14 +98,14 @@ margin:10px auto 12px;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-margin-bottom:12px;
+margin-bottom:10px;
 }
 
 .field-box{
 border:1px solid #d7c79d;
 background:#fff;
 padding:8px 10px;
-height:84px;
+height:66px;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
@@ -116,7 +120,7 @@ line-height:1.1;
 }
 
 .field-value{
-font-size:16px;
+font-size:14px;
 font-weight:700;
 line-height:1.2;
 word-break:break-word;
@@ -127,7 +131,7 @@ display:grid;
 grid-template-columns:1fr 112px;
 gap:12px;
 align-items:stretch;
-margin-top:6px;
+margin-top:12px;
 }
 
 .ticket-number-box{
@@ -183,25 +187,25 @@ display:block;
 text-align:center;
 font-size:11px;
 line-height:1.25;
-margin-top:10px;
+margin-top:14px;
 min-height:28px;
 }
 
 .cut-line{
 position:relative;
-height:26px;
-margin:10px 0;
+height:36px;
+margin:0;
 border-top:2px dashed #bdad82;
 }
 
 .cut-line span{
 position:absolute;
 left:50%;
-top:-12px;
+top:-16px;
 transform:translateX(-50%);
 background:#fffdf8;
 padding:0 8px;
-font-size:16px;
+font-size:26px;
 line-height:1;
 }
 
