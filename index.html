@@ -1,161 +1,242 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gasthaus Alt Grieth – Tickets</title>
-  <meta name="robots" content="noindex" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gasthaus Alt Grieth – Tickets</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+*{box-sizing:border-box;}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f8f4ea;
-      color: #160520;
-    }
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f8f4ea;
+color:#160520;
+}
 
-    .wrap {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 18px 14px 24px;
-    }
+.wrap{
+max-width:1000px;
+margin:auto;
+padding:18px;
+}
 
-    .page-topline {
-      text-align: center;
-      font-size: 12px;
-      letter-spacing: 4px;
-      color: #8a7750;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-    }
+h1{
+text-align:center;
+margin-bottom:16px;
+letter-spacing:2px;
+}
 
-    h1 {
-      margin: 0 0 14px;
-      text-align: center;
-      font-size: 34px;
-      line-height: 1.1;
-      letter-spacing: 2px;
-      color: #160520;
-    }
+.intro{
+text-align:center;
+margin-bottom:20px;
+}
 
-    .intro {
-      max-width: 820px;
-      margin: 0 auto 22px;
-      text-align: center;
-      line-height: 1.65;
-      font-size: 15px;
-      color: #2d1633;
-    }
+.status{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+margin-bottom:20px;
+}
 
-    .status-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
+.status div{
+border:2px solid #bdad82;
+padding:12px;
+text-align:center;
+background:#fff;
+}
 
-    .status-box {
-      border: 2px solid #bdad82;
-      background: linear-gradient(180deg, #fffdf8 0%, #f6efdf 100%);
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-    }
+.form{
+border:2px solid #bdad82;
+padding:16px;
+background:#fff;
+}
 
-    .status-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #7a6642;
-      margin-bottom: 8px;
-    }
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
 
-    .status-value {
-      font-size: 30px;
-      font-weight: 700;
-      color: #160520;
-    }
+input,select{
+padding:10px;
+border:1px solid #bdad82;
+}
 
-    .message {
-      display: none;
-      margin: 0 0 14px;
-      padding: 12px 14px;
-      border: 1px solid #bdad82;
-      background: #fff;
-      text-align: center;
-      line-height: 1.4;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    }
+.buttons{
+display:flex;
+gap:10px;
+margin-top:12px;
+}
 
-    .form-box {
-      border: 2px solid #bdad82;
-      background: linear-gradient(180deg, #fffdf8 0%, #f6efdf 100%);
-      padding: 18px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
-    }
+button{
+flex:1;
+padding:10px;
+border:none;
+cursor:pointer;
+}
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px 14px;
-    }
+.primary{
+background:#160520;
+color:#fff;
+}
 
-    label {
-      display: block;
-      margin: 0 0 6px;
-      font-weight: 700;
-      font-size: 14px;
-      color: #2d1633;
-    }
+.secondary{
+background:#bdad82;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #bdad82;
-      font-size: 14px;
-      background: #fff;
-      color: #160520;
-      min-height: 42px;
-      outline: none;
-    }
+.preview{
+margin-top:20px;
+}
 
-    input:focus,
-    select:focus {
-      border-color: #8f7b56;
-      box-shadow: 0 0 0 2px rgba(189,173,130,0.18);
-    }
+.sheet{
+aspect-ratio:210/297;
+border:2px solid #bdad82;
+padding:12px;
+background:#fff;
+}
 
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-    }
+.half{
+height:48%;
+}
 
-    button {
-      flex: 1;
-      padding: 11px 12px;
-      border: none;
-      cursor: pointer;
-      min-height: 42px;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
+.cut{
+border-top:2px dashed #bdad82;
+margin:8px 0;
+text-align:center;
+}
 
-    .btn-primary {
-      background: #160520;
-      color: #fff;
-    }
+.box{
+border:1px solid #bdad82;
+padding:6px;
+margin:4px;
+}
 
-    .btn-secondary {
-      background: #bdad82;
-      color: #160520;
-    }
+@media(max-width:700px){
+.grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
 
-    .preview-title {
-      text-align: center;
-      margin: 22px 0 10px;
-      letter-spacing: 
+<body>
+
+<div class="wrap">
+
+<h1>HEIMATLIEDER ABEND</h1>
+
+<div class="intro">
+Reserviere deinen Sitzplatz kostenlos
+</div>
+
+<div class="status">
+<div>Tische frei: <span id="tables">-</span></div>
+<div>Plätze frei: <span id="seats">-</span></div>
+</div>
+
+<div class="form">
+
+<div class="grid">
+<input id="first_name" placeholder="Vorname">
+<input id="last_name" placeholder="Nachname">
+<input id="email" placeholder="E-Mail">
+<input id="phone" placeholder="Telefon">
+<input id="persons" type="number" value="1">
+<select id="food">
+<option>Ja</option>
+<option selected>Nein</option>
+</select>
+</div>
+
+<div class="buttons">
+<button class="primary" onclick="reserve()">Reservieren</button>
+<button class="secondary" onclick="pdf()">PDF</button>
+</div>
+
+</div>
+
+<div class="preview">
+<div class="sheet">
+
+<div class="half" id="p1"></div>
+
+<div class="cut">✂</div>
+
+<div class="half" id="p2"></div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+let lastTicket="";
+
+function fill(d){
+
+let url="https://heimat-ticket.vercel.app/ticket.html?ticket="+d.ticket_number;
+
+function block(){
+return `
+<div class="box">${d.first_name}</div>
+<div class="box">${d.last_name}</div>
+<div class="box">${d.email}</div>
+<div class="box">${d.phone}</div>
+<div class="box">${d.persons}</div>
+<div class="box">${d.food}</div>
+<div class="box"><b>${d.ticket_number}</b></div>
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(url)}">
+`;
+}
+
+document.getElementById("p1").innerHTML=block();
+document.getElementById("p2").innerHTML=block();
+}
+
+function reserve(){
+
+let data={
+first_name:first_name.value,
+last_name:last_name.value,
+email:email.value,
+phone:phone.value,
+persons:persons.value,
+food:food.value
+};
+
+fetch("/api/reserve?"+new URLSearchParams(data))
+.then(r=>r.json())
+.then(res=>{
+lastTicket=res.ticket_number;
+fill(res);
+load();
+});
+}
+
+function pdf(){
+if(!lastTicket){
+alert("Eerst reserveren");
+return;
+}
+
+window.open(
+"https://heimat-ticket.vercel.app/ticket.html?ticket="+lastTicket+"&pdf=1",
+"_blank"
+);
+}
+
+function load(){
+fetch("/api/status")
+.then(r=>r.json())
+.then(d=>{
+tables.innerText=d.available_tables;
+seats.innerText=d.available_seats;
+});
+}
+
+load();
+
+</script>
+
+</body>
+</html>
