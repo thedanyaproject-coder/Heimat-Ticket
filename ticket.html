@@ -48,7 +48,7 @@ url("https://i.postimg.cc/0yKq0kXr/rhein-soft.jpg");
 background-size:cover;
 background-position:center;
 display:grid;
-grid-template-rows:1fr 28px 1fr;
+grid-template-rows:1fr 34px 1fr;
 }
 
 .ticket-half{
@@ -100,14 +100,14 @@ margin:10px auto 12px;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-margin-bottom:10px;
+margin-bottom:8px;
 }
 
 .field-box{
 border:1px solid #d7c79d;
 background:#fff;
 padding:8px 10px;
-height:66px;
+height:60px;
 display:flex;
 flex-direction:column;
 justify-content:flex-start;
@@ -118,12 +118,12 @@ min-height:0;
 font-size:10px;
 text-transform:uppercase;
 color:#8a7750;
-margin-bottom:5px;
+margin-bottom:4px;
 line-height:1.1;
 }
 
 .field-value{
-font-size:14px;
+font-size:15px;
 font-weight:700;
 line-height:1.2;
 word-break:break-word;
@@ -131,22 +131,22 @@ word-break:break-word;
 
 .ticket-bottom{
 display:grid;
-grid-template-columns:1fr 112px;
+grid-template-columns:1fr 108px;
 gap:12px;
 align-items:stretch;
-margin-top:12px;
+margin-top:10px;
 }
 
 .ticket-number-box{
 border:2px solid #bdad82;
 background:#fff;
-padding:12px;
+padding:10px;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
 text-align:center;
-min-height:112px;
+min-height:108px;
 }
 
 .ticket-number-label{
@@ -177,12 +177,12 @@ align-items:center;
 justify-content:center;
 border:1px solid #d7c79d;
 background:#fff;
-min-height:112px;
+min-height:108px;
 }
 
 .qr-wrap img{
-width:102px;
-height:102px;
+width:98px;
+height:98px;
 display:block;
 }
 
@@ -190,41 +190,25 @@ display:block;
 text-align:center;
 font-size:10px;
 line-height:1.2;
-margin-top:12px;
-min-height:24px;
+margin-top:10px;
+min-height:26px;
 }
 
 .cut-line{
 position:relative;
-height:28px;
-border-top:2px dashed #bdad82;
+height:34px;
+border-top:3px dashed #bdad82;
 }
 
 .cut-line span{
 position:absolute;
 left:50%;
-top:-14px;
+top:-18px;
 transform:translateX(-50%);
 background:#fffdf8;
 padding:0 8px;
-font-size:24px;
+font-size:30px;
 line-height:1;
-}
-
-.actions{
-width:794px;
-margin:16px auto 24px;
-text-align:center;
-}
-
-button{
-padding:11px 18px;
-border:none;
-background:#160520;
-color:#fff;
-cursor:pointer;
-font-size:14px;
-font-weight:700;
 }
 
 .message{
@@ -236,12 +220,11 @@ font-size:16px;
 
 @media print{
 body{background:#fff;}
-.actions{display:none;}
 }
 
 @media(max-width:820px){
 body{overflow-x:auto;}
-.wrap,.actions,.message{width:794px;}
+.wrap,.message{width:794px;}
 }
 </style>
 </head>
@@ -370,15 +353,7 @@ body{overflow-x:auto;}
             </div>
           </div>
         </div>
-
-        <div class="actions">
-          <button id="pdfBtn">PDF herunterladen</button>
-        </div>
       `;
-
-      document.getElementById("pdfBtn").addEventListener("click", function () {
-        downloadPdf(data.ticket_number);
-      });
 
       if (autoPdf === "1") {
         setTimeout(function () {
