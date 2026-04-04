@@ -3,7 +3,7 @@ module.exports = async function (req, res) {
     const ticket = req.query.ticket || "";
 
     const url =
-      "https://script.google.com/macros/s/AKfycbw4rZ7BqTOVG3vAayLDA7ipDs1VUX-hYxnukwCAgKQn9q6SpW940pSxm6s3YJ0KBGiErw/exec" +
+      "https://script.google.com/macros/s/AKfycbzacbdB_CkW9qqq5-ABFB_5g8vatoJLsoN9MkgYCyFD--YYkxQGFSkuoZz_GZ8eyKQnZw/exec" +
       "?action=lookup" +
       "&ticket=" + encodeURIComponent(ticket);
 
