@@ -6,9 +6,6 @@
   <title>Gasthaus Alt Grieth – Tickets</title>
   <meta name="robots" content="noindex" />
 
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-
   <style>
     * { box-sizing: border-box; }
 
@@ -418,22 +415,27 @@
           <label for="first_name">Vorname</label>
           <input id="first_name" type="text" placeholder="Vorname" />
         </div>
+
         <div>
           <label for="last_name">Nachname</label>
           <input id="last_name" type="text" placeholder="Nachname" />
         </div>
+
         <div>
           <label for="email">E-Mail</label>
           <input id="email" type="email" placeholder="E-Mail" />
         </div>
+
         <div>
           <label for="phone">Telefonnummer</label>
           <input id="phone" type="text" placeholder="Telefonnummer" />
         </div>
+
         <div>
           <label for="persons">Anzahl Personen</label>
           <input id="persons" type="number" min="1" value="1" />
         </div>
+
         <div>
           <label for="food">Gehen Sie auch essen?</label>
           <select id="food">
@@ -445,7 +447,7 @@
 
       <div class="btn-row">
         <button class="btn-primary" id="reserveBtn" type="button">Reservieren</button>
-        <button class="btn-secondary" id="pdfBtn" type="button">PDF herunterladen</button>
+        <button class="btn-secondary" id="printPageBtn" type="button">Druckseite öffnen</button>
       </div>
     </div>
 
@@ -580,8 +582,12 @@
       sendHeight();
     }
 
-    function getTicketTargetUrl(data) {
-      return "https://www.altgrieth.de/heimat-tickets?ticket=" + encodeURIComponent(data.ticket_number || "");
+    function getTicketTargetUrl(data, autoPrint) {
+      var url = "https://www.altgrieth.de/heimat-tickets?ticket=" + encodeURIComponent(data.ticket_number || "");
+      if (autoPrint) {
+        url += "&print=1";
+      }
+      return url;
     }
 
     function qrUrl(targetUrl) {
@@ -600,7 +606,7 @@
     }
 
     function fillHalf(prefix, data) {
-      var targetUrl = getTicketTargetUrl(data);
+      var targetUrl = getTicketTargetUrl(data, false);
 
       document.getElementById(prefix + "_first_name").textContent = data.first_name || "—";
       document.getElementById(prefix + "_last_name").textContent = data.last_name || "—";
@@ -706,17 +712,12 @@
       );
     }
 
-    function downloadPdf() {
-      html2canvas(document.getElementById("ticketSheet"), {
-        scale: 3,
-        backgroundColor: "#ffffff",
-        useCORS: true
-      }).then(function(canvas) {
-        var img = canvas.toDataURL("image/jpeg", 1);
-        var pdf = new window.jspdf.jsPDF("p", "mm", "a4");
-        pdf.addImage(img, "JPEG", 10, 10, 190, 277);
-        pdf.save("ticket.pdf");
-      });
+    function openPrintPage() {
+      if (!latestTicketNumber) {
+        showMessage("Bitte reservieren Sie zuerst, damit eine Ticketnummer erstellt wird.", true);
+        return;
+      }
+      window.open("https://www.altgrieth.de/heimat-tickets?ticket=" + encodeURIComponent(latestTicketNumber) + "&print=1", "_blank");
     }
 
     window.addEventListener("load", function() {
@@ -729,7 +730,7 @@
       });
 
       document.getElementById("reserveBtn").addEventListener("click", reserve);
-      document.getElementById("pdfBtn").addEventListener("click", downloadPdf);
+      document.getElementById("printPageBtn").addEventListener("click", openPrintPage);
 
       sendHeight();
       setTimeout(sendHeight, 300);
