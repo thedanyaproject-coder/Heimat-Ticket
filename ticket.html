@@ -195,17 +195,18 @@ margin-top:8px;
 min-height:24px;
 }
 
+/* 🔥 AANGEPAST: +3mm lager */
 .cut-line{
 position:relative;
 height:34px;
 border-top:3px dashed #bdad82;
-margin-top:6px;
+margin-top:12px;
 }
 
 .cut-line span{
 position:absolute;
 left:50%;
-top:-12px;
+top:-8px;
 transform:translateX(-50%);
 background:#fffdf8;
 padding:0 8px;
@@ -362,11 +363,9 @@ body{overflow-x:auto;}
           downloadPdf(data.ticket_number);
         }, 400);
       }
-    })
-    .catch(() => {
-      app.innerHTML = "Reservierung konnte nicht geladen werden";
     });
 })();
 </script>
+
 </body>
 </html>
