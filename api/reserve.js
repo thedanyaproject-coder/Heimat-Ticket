@@ -7,14 +7,8 @@ module.exports = async function (req, res) {
     const persons = req.query.persons || "";
     const food = req.query.food || "Nein";
 
-    const GOOGLE_SCRIPT_URL = process.env.GOOGLE_SCRIPT_URL;
-
-    if (!GOOGLE_SCRIPT_URL) {
-      return res.status(500).json({
-        success: false,
-        message: "GOOGLE_SCRIPT_URL ontbreekt in Vercel environment variables."
-      });
-    }
+    const GOOGLE_SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbzacbdB_CkW9qqq5-ABFB_5g8vatoJLsoN9MkgYCyFD--YYkxQGFSkuoZz_GZ8eyKQnZw/exec";
 
     const url =
       GOOGLE_SCRIPT_URL +
@@ -29,24 +23,13 @@ module.exports = async function (req, res) {
     const response = await fetch(url);
     const text = await response.text();
 
-    let data;
-    try {
-      data = JSON.parse(text);
-    } catch (e) {
-      return res.status(500).json({
-        success: false,
-        message: "Ongeldige JSON van Google Script",
-        raw_response: text
-      });
-    }
-
-    return res.status(200).json(data);
-
+    res.setHeader("Content-Type", "application/json; charset=utf-8");
+    res.status(200).send(text);
   } catch (error) {
     console.error("RESERVE ERROR:", error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Reserve proxy error",
       error: String(error)
     });
   }
