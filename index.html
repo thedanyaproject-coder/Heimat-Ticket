@@ -16,7 +16,7 @@ body{
 }
 
 .wrap{
-  max-width:1040px;
+  max-width:980px;
   margin:0 auto;
   padding:16px;
 }
@@ -144,13 +144,17 @@ button{
   text-transform:uppercase;
 }
 
+.preview-shell{
+  width:100%;
+}
+
 .preview-frame{
   width:100%;
-  max-width:860px;
+  max-width:700px;
   margin:0 auto;
   border:1px solid #d7c79d;
   background:#fffdf8;
-  padding:14px;
+  padding:12px;
 }
 
 .preview-ticket{
@@ -173,7 +177,7 @@ button{
 }
 
 .preview-title-main{
-  font-size:24px;
+  font-size:22px;
   font-weight:700;
   line-height:1.05;
 }
@@ -184,7 +188,7 @@ button{
 }
 
 .preview-line{
-  width:130px;
+  width:120px;
   height:1px;
   background:#bdad82;
   margin:10px auto 12px;
@@ -200,7 +204,7 @@ button{
   border:1px solid #d7c79d;
   background:#fff;
   padding:8px 10px;
-  min-height:58px;
+  min-height:56px;
 }
 
 .preview-label{
@@ -219,7 +223,7 @@ button{
 
 .preview-bottom{
   display:grid;
-  grid-template-columns:1fr 108px;
+  grid-template-columns:1fr 100px;
   gap:12px;
   margin-top:12px;
   align-items:stretch;
@@ -243,7 +247,7 @@ button{
 }
 
 .preview-number-value{
-  font-size:18px;
+  font-size:17px;
   font-weight:700;
   line-height:1.2;
   word-break:break-word;
@@ -261,12 +265,12 @@ button{
   display:flex;
   align-items:center;
   justify-content:center;
-  min-height:108px;
+  min-height:100px;
 }
 
 .preview-qr img{
-  width:98px;
-  height:98px;
+  width:90px;
+  height:90px;
   display:block;
 }
 
@@ -287,11 +291,16 @@ button{
   }
 
   .preview-bottom{
-    grid-template-columns:1fr 100px;
+    grid-template-columns:1fr 96px;
   }
 
   .preview-title-main{
     font-size:20px;
+  }
+
+  .preview-qr img{
+    width:84px;
+    height:84px;
   }
 }
 </style>
@@ -351,45 +360,47 @@ button{
 
     <div class="btn-row">
       <button class="btn-primary" id="reserveBtn" type="button">Reservieren</button>
-      <button class="btn-secondary" id="pdfBtn" type="button">Erneut PDF laden</button>
+      <button class="btn-secondary" id="pdfBtn" type="button">PDF generieren</button>
     </div>
   </div>
 
   <div class="preview-title">Vorschau</div>
 
-  <div class="preview-frame">
-    <div class="preview-ticket">
-      <div class="preview-header">
-        <div class="preview-house">Gasthaus Alt Grieth</div>
-        <div class="preview-title-main">HEIMATLIEDER ABEND</div>
-        <div class="preview-sub">Samstag · 6. Juni · 20:00 Uhr</div>
-      </div>
-
-      <div class="preview-line"></div>
-
-      <div class="preview-grid">
-        <div class="preview-box"><div class="preview-label">Vorname</div><div class="preview-value" id="p_first_name">Vorname</div></div>
-        <div class="preview-box"><div class="preview-label">Nachname</div><div class="preview-value" id="p_last_name">Nachname</div></div>
-        <div class="preview-box"><div class="preview-label">E-Mail</div><div class="preview-value" id="p_email">beispiel@email.de</div></div>
-        <div class="preview-box"><div class="preview-label">Telefon</div><div class="preview-value" id="p_phone">0123456789</div></div>
-        <div class="preview-box"><div class="preview-label">Personen</div><div class="preview-value" id="p_persons">2</div></div>
-        <div class="preview-box"><div class="preview-label">Essen</div><div class="preview-value" id="p_food">Ja</div></div>
-      </div>
-
-      <div class="preview-bottom">
-        <div class="preview-number">
-          <div class="preview-number-label">Ticketnummer</div>
-          <div class="preview-number-value" id="p_ticket_number">WIRD BEI RESERVIERUNG VERGEBEN</div>
-          <div class="preview-free">EINTRITT FREI</div>
+  <div class="preview-shell">
+    <div class="preview-frame">
+      <div class="preview-ticket">
+        <div class="preview-header">
+          <div class="preview-house">Gasthaus Alt Grieth</div>
+          <div class="preview-title-main">HEIMATLIEDER ABEND</div>
+          <div class="preview-sub">Samstag · 6. Juni · 20:00 Uhr</div>
         </div>
-        <div class="preview-qr">
-          <img id="p_qr" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fheimat-ticket.vercel.app%2Fticket.html">
-        </div>
-      </div>
 
-      <div class="preview-note">
-        Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
-        Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+        <div class="preview-line"></div>
+
+        <div class="preview-grid">
+          <div class="preview-box"><div class="preview-label">Vorname</div><div class="preview-value" id="p_first_name">Vorname</div></div>
+          <div class="preview-box"><div class="preview-label">Nachname</div><div class="preview-value" id="p_last_name">Nachname</div></div>
+          <div class="preview-box"><div class="preview-label">E-Mail</div><div class="preview-value" id="p_email">beispiel@email.de</div></div>
+          <div class="preview-box"><div class="preview-label">Telefon</div><div class="preview-value" id="p_phone">0123456789</div></div>
+          <div class="preview-box"><div class="preview-label">Personen</div><div class="preview-value" id="p_persons">2</div></div>
+          <div class="preview-box"><div class="preview-label">Essen</div><div class="preview-value" id="p_food">Ja</div></div>
+        </div>
+
+        <div class="preview-bottom">
+          <div class="preview-number">
+            <div class="preview-number-label">Ticketnummer</div>
+            <div class="preview-number-value" id="p_ticket_number">WIRD BEI RESERVIERUNG VERGEBEN</div>
+            <div class="preview-free">EINTRITT FREI</div>
+          </div>
+          <div class="preview-qr">
+            <img id="p_qr" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=https%3A%2F%2Fheimat-ticket.vercel.app%2Fticket.html">
+          </div>
+        </div>
+
+        <div class="preview-note">
+          Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
+          Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+        </div>
       </div>
     </div>
   </div>
@@ -476,10 +487,6 @@ function reserve() {
       fillPreview(res);
       loadStatus();
       showMessage("Reservierung erfolgreich. Ticketnummer: " + res.ticket_number, false);
-
-      setTimeout(function () {
-        openPdf(latestTicket);
-      }, 250);
     })
     .catch(() => {
       showMessage("Verbindung zum Reservierungssystem fehlgeschlagen.", true);
