@@ -1,71 +1,527 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ticket</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Heimat Ticket PDF</title>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
 <style>
-body{font-family:Arial;background:#f7f2e8;margin:0;text-align:center}
-.ticket{width:794px;height:1123px;margin:20px auto;background:white;padding:20px}
-button{padding:10px;margin:10px}
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f7f2e8;
+color:#160520;
+}
+
+.page{
+max-width:1100px;
+margin:0 auto;
+padding:16px 12px 24px;
+}
+
+.print-head{
+text-align:center;
+margin-bottom:14px;
+}
+
+.print-head-top{
+font-size:12px;
+letter-spacing:4px;
+text-transform:uppercase;
+color:#8a7750;
+margin-bottom:6px;
+}
+
+.print-head-title{
+font-size:28px;
+font-weight:700;
+letter-spacing:1px;
+line-height:1.1;
+margin:0;
+}
+
+.print-head-sub{
+font-size:14px;
+line-height:1.3;
+margin-top:6px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+justify-content:center;
+flex-wrap:wrap;
+margin:0 0 16px;
+}
+
+.btn{
+padding:11px 18px;
+border:none;
+cursor:pointer;
+font-size:14px;
+font-weight:700;
+text-decoration:none;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+min-width:170px;
+}
+
+.btn-primary{
+background:#160520;
+color:#fff;
+}
+
+.btn-secondary{
+background:#bdad82;
+color:#160520;
+}
+
+.preview-wrap{
+width:100%;
+overflow:auto;
+display:flex;
+justify-content:center;
+}
+
+.stage{
+display:inline-block;
+}
+
+.paper{
+width:794px;
+height:1123px;
+background:#fffdf8;
+border:2px solid #bdad82;
+position:relative;
+overflow:hidden;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.inner{
+position:absolute;
+left:38px;
+right:38px;
+top:38px;
+bottom:38px;
+border:1px solid #d7c79d;
+padding:14px;
+background:
+linear-gradient(rgba(255,251,242,0.96), rgba(255,251,242,0.96)),
+url("https://i.postimg.cc/0yKq0kXr/rhein-soft.jpg");
+background-size:cover;
+background-position:center;
+display:grid;
+grid-template-rows:1fr 34px 1fr;
+}
+
+.ticket-half{
+background:#fff;
+border:1px solid #d7c79d;
+padding:12px 14px 10px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+min-height:0;
+overflow:hidden;
+}
+
+.ticket-header{
+text-align:center;
+margin-bottom:6px;
+}
+
+.ticket-house{
+font-size:10px;
+letter-spacing:5px;
+text-transform:uppercase;
+color:#8a7750;
+margin-bottom:5px;
+}
+
+.ticket-title{
+font-size:26px;
+font-weight:700;
+margin:0;
+line-height:1.05;
+}
+
+.ticket-sub{
+font-size:12px;
+margin-top:5px;
+line-height:1.2;
+}
+
+.divider{
+width:145px;
+height:1px;
+background:#bdad82;
+margin:10px auto 12px;
+}
+
+.ticket-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.field-box{
+border:1px solid #d7c79d;
+background:#fff;
+padding:8px;
+height:60px;
+}
+
+.field-label{
+font-size:10px;
+color:#8a7750;
+text-transform:uppercase;
+margin-bottom:4px;
+line-height:1.1;
+}
+
+.field-value{
+font-size:15px;
+font-weight:bold;
+line-height:1.2;
+word-break:break-word;
+}
+
+.ticket-bottom{
+display:grid;
+grid-template-columns:1fr 108px;
+gap:12px;
+margin-top:10px;
+align-items:stretch;
+}
+
+.ticket-number-box{
+border:2px solid #bdad82;
+padding:10px;
+text-align:center;
+background:#fff;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.ticket-number-label{
+font-size:10px;
+color:#8a7750;
+text-transform:uppercase;
+margin-bottom:6px;
+}
+
+.ticket-number{
+font-size:18px;
+font-weight:bold;
+line-height:1.2;
+word-break:break-word;
+}
+
+.free-line{
+font-size:12px;
+font-weight:bold;
+margin-top:7px;
+line-height:1.1;
+}
+
+.qr-wrap{
+display:flex;
+align-items:center;
+justify-content:center;
+border:1px solid #d7c79d;
+background:#fff;
+min-height:108px;
+}
+
+.qr-wrap img{
+width:98px;
+height:98px;
+display:block;
+}
+
+.ticket-notes{
+text-align:center;
+font-size:10px;
+margin-top:8px;
+line-height:1.18;
+}
+
+.cut-line{
+position:relative;
+height:34px;
+border-top:3px dashed #bdad82;
+margin-top:16px;
+}
+
+.cut-line span{
+position:absolute;
+left:50%;
+top:-17px;
+transform:translateX(-50%);
+background:transparent;
+font-size:26px;
+line-height:1;
+}
+
+.message{
+max-width:900px;
+margin:30px auto;
+text-align:center;
+font-size:16px;
+padding:0 12px;
+}
+
+@media(max-width:860px){
+.page{
+padding:12px 8px 20px;
+}
+.print-head-title{
+font-size:24px;
+}
+.stage{
+transform:scale(0.78);
+transform-origin:top left;
+width:619px;
+height:876px;
+}
+.preview-wrap{
+justify-content:flex-start;
+}
+}
+
+@media(max-width:640px){
+.print-head-title{
+font-size:21px;
+}
+.print-head-sub{
+font-size:13px;
+}
+.btn{
+min-width:140px;
+font-size:13px;
+padding:10px 14px;
+}
+.stage{
+transform:scale(0.58);
+transform-origin:top left;
+width:460px;
+height:652px;
+}
+.preview-wrap{
+justify-content:flex-start;
+}
+}
+
+@media print{
+body{
+background:#fff;
+}
+.print-head,
+.actions{
+display:none;
+}
+.page{
+max-width:none;
+padding:0;
+}
+.preview-wrap{
+display:block;
+overflow:visible;
+}
+.stage{
+transform:none !important;
+width:auto !important;
+height:auto !important;
+}
+.paper{
+box-shadow:none;
+}
+}
 </style>
 </head>
 
 <body>
 
-<div id="app">laden...</div>
+<div id="app" class="message">Ticket wird geladen...</div>
 
 <script>
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const ticket = params.get("ticket");
+  const autoPdf = params.get("pdf");
+  const app = document.getElementById("app");
 
-// 👉 redirect als via jouw domein binnenkomt
-if(location.hostname.includes("altgrieth")){
-const t=new URLSearchParams(location.search).get("ticket");
-if(t){
-location.href="https://heimat-ticket.vercel.app/ticket.html?ticket="+t;
-}
-}
+  function esc(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
 
-const params=new URLSearchParams(location.search);
-const ticket=params.get("ticket");
+  function qr(url) {
+    return "https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=" + encodeURIComponent(url);
+  }
 
-if(!ticket){
-document.getElementById("app").innerHTML="kein ticket";
-}else{
+  function waitForImages(container) {
+    const images = Array.from(container.querySelectorAll("img"));
+    if (!images.length) return Promise.resolve();
 
-fetch("/api/lookup?ticket="+ticket)
-.then(r=>r.json())
-.then(data=>{
+    return Promise.all(images.map(img => {
+      if (img.complete && img.naturalWidth > 0) return Promise.resolve();
+      return new Promise(resolve => {
+        const done = () => resolve();
+        img.addEventListener("load", done, { once: true });
+        img.addEventListener("error", done, { once: true });
+      });
+    }));
+  }
 
-const publicUrl="https://www.altgrieth.de/heimat-tickets?ticket="+data.ticket_number;
+  function buildHalf(data, url, qrId) {
+    return `
+      <div class="ticket-half">
+        <div>
+          <div class="ticket-header">
+            <div class="ticket-house">Gasthaus Alt Grieth</div>
+            <div class="ticket-title">HEIMATLIEDER ABEND</div>
+            <div class="ticket-sub">Samstag · 6. Juni · 20:00 Uhr</div>
+          </div>
 
-document.getElementById("app").innerHTML=`
-<button onclick="makePdf()">PDF downloaden</button>
-<a href="https://www.altgrieth.de/heimat-tickets"><button>Terug</button></a>
+          <div class="divider"></div>
 
-<div class="ticket" id="pdf">
-<h2>HEIMATLIEDER ABEND</h2>
-<p>${data.first_name} ${data.last_name}</p>
-<p>${data.persons} Personen</p>
-<p>${data.ticket_number}</p>
+          <div class="ticket-grid">
+            <div class="field-box">
+              <div class="field-label">Vorname</div>
+              <div class="field-value">${esc(data.first_name)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Nachname</div>
+              <div class="field-value">${esc(data.last_name)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">E-Mail</div>
+              <div class="field-value">${esc(data.email)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Telefon</div>
+              <div class="field-value">${esc(data.phone)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Personen</div>
+              <div class="field-value">${esc(data.persons)}</div>
+            </div>
+            <div class="field-box">
+              <div class="field-label">Essen</div>
+              <div class="field-value">${esc(data.food)}</div>
+            </div>
+          </div>
+        </div>
 
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(publicUrl)}">
-</div>
-`;
-});
-}
+        <div>
+          <div class="ticket-bottom">
+            <div class="ticket-number-box">
+              <div class="ticket-number-label">Ticketnummer</div>
+              <div class="ticket-number">${esc(data.ticket_number)}</div>
+              <div class="free-line">EINTRITT FREI</div>
+            </div>
 
-function makePdf(){
-html2canvas(document.getElementById("pdf")).then(canvas=>{
-const pdf=new jspdf.jsPDF("p","mm","a4");
-pdf.addImage(canvas.toDataURL(),"PNG",0,0,210,297);
-pdf.save("ticket.pdf");
-});
-}
+            <div class="qr-wrap">
+              <img id="${qrId}" src="${qr(url)}" alt="QR Code" crossorigin="anonymous">
+            </div>
+          </div>
 
+          <div class="ticket-notes">
+            Dieses Ticket sichert einen Sitzplatz an einem Tisch.<br>
+            Bitte bringen Sie dieses Ticket digital oder ausgedruckt mit.
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function downloadPdf(filename) {
+    const element = document.getElementById("pdfSheet");
+
+    waitForImages(element).then(() => {
+      setTimeout(() => {
+        html2canvas(element, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff"
+        }).then(canvas => {
+          const img = canvas.toDataURL("image/jpeg", 1);
+          const pdf = new window.jspdf.jsPDF("p", "mm", "a4");
+          pdf.addImage(img, "JPEG", 0, 0, 210, 297);
+          pdf.save(filename + ".pdf");
+        });
+      }, 150);
+    });
+  }
+
+  if (!ticket) {
+    app.innerHTML = "Kein Ticket angegeben";
+    return;
+  }
+
+  fetch("/api/lookup?ticket=" + encodeURIComponent(ticket))
+    .then(r => r.json())
+    .then(data => {
+      if (!data || !data.success) {
+        app.innerHTML = "Reservierung nicht gefunden";
+        return;
+      }
+
+      const url = "https://heimat-ticket.vercel.app/ticket.html?ticket=" + encodeURIComponent(data.ticket_number);
+      const backUrl = "https://www.altgrieth.de/heimat-tickets";
+
+      app.className = "";
+      app.innerHTML = `
+        <div class="page">
+          <div class="print-head">
+            <div class="print-head-top">Gasthaus Alt Grieth</div>
+            <h1 class="print-head-title">Ticket Vorschau / PDF</h1>
+            <div class="print-head-sub">Heimatlieder Abend · Samstag, 6. Juni · 20:00 Uhr</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" id="pdfBtn">PDF herunterladen</button>
+            <a class="btn btn-secondary" href="${backUrl}">Zurück zur Vorschau</a>
+            <button class="btn btn-secondary" type="button" onclick="window.close()">Schließen</button>
+          </div>
+
+          <div class="preview-wrap">
+            <div class="stage">
+              <div class="paper" id="pdfSheet">
+                <div class="inner">
+                  ${buildHalf(data, url, "qr_top")}
+                  <div class="cut-line"><span>✂</span></div>
+                  ${buildHalf(data, url, "qr_bottom")}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("pdfBtn").addEventListener("click", function () {
+        downloadPdf(data.ticket_number);
+      });
+
+      if (autoPdf === "1") {
+        downloadPdf(data.ticket_number);
+      }
+    })
+    .catch(() => {
+      app.innerHTML = "Reservierung konnte nicht geladen werden";
+    });
+})();
 </script>
 
 </body>
