@@ -278,6 +278,16 @@ font-size:16px;
 padding:0 12px;
 }
 
+/* verborgen echte A4 voor PDF */
+.pdf-hidden{
+position:absolute;
+left:-99999px;
+top:0;
+width:794px;
+height:1123px;
+overflow:hidden;
+}
+
 @media(max-width:860px){
 .page{
 padding:12px 8px 20px;
@@ -447,7 +457,7 @@ box-shadow:none;
   }
 
   function downloadPdf(filename) {
-    const element = document.getElementById("pdfSheet");
+    const element = document.getElementById("pdfSheetHidden");
 
     waitForImages(element).then(() => {
       setTimeout(() => {
@@ -481,6 +491,9 @@ box-shadow:none;
       const url = "https://heimat-ticket.vercel.app/ticket.html?ticket=" + encodeURIComponent(data.ticket_number);
       const backUrl = "https://www.altgrieth.de/heimat-tickets";
 
+      const topHalf = buildHalf(data, url, "qr_top");
+      const bottomHalf = buildHalf(data, url, "qr_bottom");
+
       app.className = "";
       app.innerHTML = `
         <div class="page">
@@ -500,10 +513,20 @@ box-shadow:none;
             <div class="stage">
               <div class="paper" id="pdfSheet">
                 <div class="inner">
-                  ${buildHalf(data, url, "qr_top")}
+                  ${topHalf}
                   <div class="cut-line"><span>✂</span></div>
-                  ${buildHalf(data, url, "qr_bottom")}
+                  ${bottomHalf}
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdf-hidden">
+            <div class="paper" id="pdfSheetHidden">
+              <div class="inner">
+                ${topHalf.replace('id="qr_top"', 'id="qr_top_hidden"')}
+                <div class="cut-line"><span>✂</span></div>
+                ${bottomHalf.replace('id="qr_bottom"', 'id="qr_bottom_hidden"')}
               </div>
             </div>
           </div>
